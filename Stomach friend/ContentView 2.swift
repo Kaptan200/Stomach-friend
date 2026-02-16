@@ -6,122 +6,172 @@
 //
 
 import SwiftUI
-var movielist = ["food1", "food2","food3", "food4"]
-var catogarylist = ["Roti sabzi", "Fast food","Dosa", "Veg plate"]
-struct ContentView: View {
+
+struct profilepageView: View {
+   
    var body: some View {
-       TabView{
-           VStack(alignment: .leading, spacing: 16){
-                   topheaderview()
-                     bottomview()
-                    scrollview()
-            }.tabItem {
-                Image(systemName: "house")
-                    .foregroundStyle(.red)
-                Text("Explore")
-            }
-           VStack{
-               ContentView()
-           }.tabItem {
-               Image(systemName: "heart")
-                Text("favorites")
-           }
-           VStack{
-               ContentView()
-           }.tabItem {
-               Image(systemName: "person.fill")
-                Text("search")
-           }
+      NavigationStack{
+         
+          VStack (alignment: .leading){
+            
+             topview()
+             bottomview2()
+               myfavorite()
+                          
+          }.padding(10)
+        .background(Color(.systemPink).opacity(0.10))
        }
     }
 }
-struct topheaderview: View {
+struct topview:View {
     var body: some View {
         HStack{
+            Image(systemName: "person.crop.circle")
+                .resizable()
+                .frame(width: 50, height: 50)
+                .clipShape(Circle())
+                .shadow(radius: 10)
             VStack(alignment: .leading){
-             Text(" HI, DEAR")
-                   .font(.title2)
-             Text("find the best food around you")
-                 .foregroundStyle(Color.gray)
-           }
-            Spacer()
-            Image(systemName: "magnifyingglass")
-                 .font(.title2)
+                Text("Kaptan")
+                    .font(.title)
+                    .bold()
+                Text("kaptanbamaniya@gmail.com")
+                    .font(.title2)
+             }
         }
-        .padding(.horizontal)
-   HStack{
-       Image(systemName: "magnifyingglass")
-           .foregroundStyle(Color.gray)
-       Text("search for dishes or restaurants...")
-           .foregroundStyle(Color.gray)
-       Spacer()
-       Image(systemName: "mic.fill")
-        .foregroundStyle(Color.gray)
-    }
-   .padding()
-   .background(Color(.systemBlue).opacity(0.10))
-   .cornerRadius(120)
-   .padding(.horizontal)
     }
 }
-struct bottomview: View {
+struct bottomview2:View {
+    var body: some View {
+        ZStack{
+           
+            VStack{
+                ZStack{
+                    Rectangle()
+                        .frame(width: 360, height: 50)
+                        .foregroundColor(.gray)
+                        .opacity(0.1)
+                        .cornerRadius(10)
+                    HStack{
+                        NavigationLink{
+                            favoriteview()
+                        }label: {
+                            Image(systemName: "bookmark.fill")
+                                .font(.title)
+                                .foregroundColor(.red)
+                                
+                            Text("Manage Favorites")
+                                .bold()
+                                .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 100))
+                            Text("12")
+                                .font(.title3)
+                            Image(systemName: "chevron.right")
+                        }.foregroundStyle(Color.primary)
+                    }
+                }
+                ZStack{
+                    Rectangle()
+                        .frame(width: 360, height: 50)
+                        .foregroundColor(.gray)
+                        .opacity(0.1)
+                        .cornerRadius(10)
+                    HStack{
+                       
+                      
+                        NavigationLink{
+                            PopularRestaurant()
+                        } label: {
+                            Image(systemName: "map.fill")
+                                .font(.title)
+                                .foregroundColor(.red)
+                                
+                            Text("Visited Restaurants")
+                                .bold()
+                                .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 90))
+                            Text("14")
+                                .font(.title3)
+                            Image(systemName: "chevron.right")
+                        }.foregroundStyle(Color.primary)
+                    }
+                 
+                }.padding(EdgeInsets(top: -13, leading: 0, bottom: 0, trailing: 0))
+                ZStack{
+                    Rectangle()
+                        .frame(width: 360, height: 50)
+                        .foregroundColor(.gray)
+                        .opacity(0.1)
+                        .cornerRadius(10)
+                    HStack{
+                       
+                        Image(systemName: "star.fill")
+                            .font(.title)
+                            .foregroundColor(.yellow)
+                            
+                        Text("Write a Review")
+                            .bold()
+                            .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 130))
+                        Text("14")
+                            .font(.title3)
+                        Image(systemName: "chevron.right")
+                    }
+                 
+                }.padding(EdgeInsets(top: -13, leading: 0, bottom: 0, trailing: 0))
+            }
+        }
+    }
+}
+struct myfavorite: View {
     var column10 = [
         GridItem(.flexible(minimum: 50, maximum: 250),spacing: 10),
         GridItem(.flexible(minimum: 50, maximum: 250),spacing: 10),]
     var body: some View {
-        LazyVGrid(columns: column10, spacing: 20){
-            ForEach(movielist.indices, id: \.self) { img in
-                  
-                          ZStack(alignment: .topTrailing){
-                            VStack(alignment: .leading){
-                                Image("\(movielist[img])")
-                                    .resizable()
-                                     .frame(minHeight: 50)
-                                    .frame(maxHeight: 150)
-                                    .aspectRatio(1/1.5, contentMode: .fill)
-                                    .clipped()
-                                    .cornerRadius(20)
-                                Text("\(catogarylist[img])")
-                                    .foregroundStyle(Color.white)
-                                    .padding(EdgeInsets(top: -30, leading: 8, bottom: 8, trailing: 0))
-                            }
-                              Image(systemName: "heart.fill")
-                                  .foregroundStyle(Color.red)
-                                  .padding(8)
-                         }
+        HStack{
+            Text("My  Favorites")
+                .font(Font.title.bold())
+        }
+       ScrollView{
+           LazyVGrid(columns: column10, spacing: 20){
+               ForEach(movielist.indices, id: \.self) { img in
+                   
+                   VStack(spacing: -10){
+                       ZStack{
+                           Image("\(movielist[img])")
+                           .resizable()
+                           .frame(minHeight: 50)
+                           .frame(maxHeight: 150)
+                           .aspectRatio(1/1.5, contentMode: .fill)
+                           .clipped()
+                           ZStack{
+                               Rectangle()
+                               .frame(width: 30, height: 30)
+                               .foregroundStyle(Color.white)
+                               .cornerRadius(9)
+                               Image(systemName: "heart.fill")
+                                   .font(.system(size: 20))
+                                   .foregroundStyle(Color.red)
+                           }
+                               .padding(EdgeInsets(top: -60, leading: 140, bottom: 0, trailing: 0))
+                       }
+                       
+                       ZStack(alignment: .leading){
+                           Rectangle()
+                               .frame(height: 80)
+                               .foregroundStyle(Color.black)
+                               .opacity(0.1)
+                       
+                               Text("\(restaurantlist[img])")
+                               .foregroundStyle(Color.black)
+                               .font(.system(size: 14, weight: .bold))
+                               .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 0))
                        }
                    }
-                    .padding(.horizontal)
-    }
-}
-struct scrollview: View {
-    var body: some View {
-        HStack{
-            Text("Popular Restaurants")
-                .font(Font.title.bold())
-            Spacer()
-            Image(systemName: "chevron.right")
-                .foregroundStyle(Color.gray)
-        }.padding(10)
-        ScrollView(.horizontal, showsIndicators: false){
-                    HStack{
-                     ForEach(movielist.indices, id: \.self) { img in
-                        Image("\(movielist[img])")
-                             .resizable()
-                              .frame(minHeight: 50)
-                             .frame(maxHeight: 250)
-                             .aspectRatio(1/1.5, contentMode: .fill)
-                             .clipped()
-                             .cornerRadius(20)
-                         Text("\(catogarylist[img])")
-                             .foregroundStyle(Color.white)
-                             .padding(EdgeInsets(top: 200, leading: -150, bottom: 0, trailing: 0))
+                   .cornerRadius(20)
                    }
-                 .padding(1)
-             }
-        }.padding(10)
+               }
+           }
+        }
     }
-}
+
 #Preview {
-    ContentView()
+    profilepageView()
 }
