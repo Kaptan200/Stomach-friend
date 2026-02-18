@@ -12,70 +12,74 @@ struct PopularRestaurant: View {
         GridItem(.flexible(minimum: 50, maximum: 250),spacing: 10),]
     var body: some View {
 NavigationStack{
-    VStack(alignment:.leading){
-        HStack{
-            NavigationLink{
-                ContentView()
-            }label: {
-                Image(systemName: "chevron.left")
-                     .foregroundStyle(Color.black)
-                     .bold()
-            }
-          Spacer()
-            Text("Popular Restaurants")
-                .font(Font.title.bold())
-            Spacer()
-        }.padding(10)
-        ScrollView{
-            LazyVGrid(columns: column10, spacing: 20){
-                ForEach(restaurantimg.indices, id: \.self) { img in
-                    
-                    VStack(spacing: -10){
-                        ZStack{
-                            Image("\(restaurantimg[img])")
-                            .resizable()
-                            .frame(minHeight: 50)
-                            .frame(maxHeight: 150)
-                            .aspectRatio(1/1.5, contentMode: .fill)
-                            .clipped()
-                          
-                        }
+    ZStack{
+        LinearGradient(gradient: Gradient(colors: [.blue.opacity(0.3),  .pink.opacity(0.6)]), startPoint: .top, endPoint: .bottom)
+            .edgesIgnoringSafeArea(.all)
+        VStack(alignment:.leading){
+            HStack{
+                NavigationLink{
+                    ContentView()
+                }label: {
+                    Image(systemName: "chevron.left")
+                         .foregroundStyle(Color.black)
+                         .bold()
+                }
+              Spacer()
+                Text("Popular Restaurants")
+                    .font(Font.title.bold())
+                Spacer()
+            }.padding(10)
+            ScrollView{
+                LazyVGrid(columns: column10, spacing: 20){
+                    ForEach(restaurantimg.indices, id: \.self) { img in
                         
-                        ZStack{
-                            Rectangle()
-                                .frame(height: 80)
-                                .foregroundStyle(Color.black)
-                                .opacity(0.1)
-                        
-                            VStack{
-                                Text("\(restaurantlist[img]) ")
-                                .foregroundStyle(Color.black)
-                                .font(.system(size: 13, weight: .bold))
-                                .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 0))
-                                HStack{
-                                    Image(systemName: "star.fill")
-                                        .foregroundColor(Color.yellow)
-                                    Image(systemName: "star.fill")
-                                        .foregroundColor(Color.yellow)
-                                    Image(systemName: "star.fill")
-                                        .foregroundColor(Color.yellow)
-                                    Image(systemName: "star.fill")
-                                        .foregroundColor(Color.yellow)
-                                }.padding(EdgeInsets(top: 0, leading: 30, bottom: 0, trailing: 0))
-                                
-                                Text("4.5M Reviews")
-                                .padding(EdgeInsets(top: 0, leading: 30, bottom: 0, trailing: 0))
-                            }.padding(EdgeInsets(top: 0, leading: -100, bottom: 0, trailing: 0))
+                        VStack(spacing: -10){
+                            ZStack{
+                                Image("\(restaurantimg[img])")
+                                .resizable()
+                                .frame(minHeight: 50)
+                                .frame(maxHeight: 150)
+                                .aspectRatio(1/1.5, contentMode: .fill)
+                                .clipped()
+                              
+                            }
                             
+                            ZStack{
+                                Rectangle()
+                                    .frame(height: 80)
+                                    .foregroundStyle(Color.black)
+                                    .opacity(0.1)
+                            
+                                VStack{
+                                    Text("\(restaurantlist[img]) ")
+                                    .foregroundStyle(Color.black)
+                                    .font(.system(size: 13, weight: .bold))
+                                    .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 0))
+                                    HStack{
+                                        Image(systemName: "star.fill")
+                                            .foregroundColor(Color.yellow)
+                                        Image(systemName: "star.fill")
+                                            .foregroundColor(Color.yellow)
+                                        Image(systemName: "star.fill")
+                                            .foregroundColor(Color.yellow)
+                                        Image(systemName: "star.fill")
+                                            .foregroundColor(Color.yellow)
+                                    }.padding(EdgeInsets(top: 0, leading: 30, bottom: 0, trailing: 0))
+                                    
+                                    Text("4.5M Reviews")
+                                    .padding(EdgeInsets(top: 0, leading: 30, bottom: 0, trailing: 0))
+                                }.padding(EdgeInsets(top: 0, leading: -100, bottom: 0, trailing: 0))
+                                
+                            }
                         }
-                    }
-                    .cornerRadius(20)
-                        }
-                       }
-                        
-        }
-    }.padding(10)
-    .background(Color(.systemPink).opacity(0.10))
+                        .cornerRadius(20)
+                            }
+                           }
+                            
+            }
+        }.padding(10)
+    }
+   
 }.toolbar(.hidden)
     }
 }

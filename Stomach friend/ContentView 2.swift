@@ -12,17 +12,22 @@ struct profilepageView: View {
    var body: some View {
       NavigationStack{
          
-          VStack (alignment: .leading){
-            
-             topview()
-             bottomview2()
-               myfavorite()
-                          
-          }.padding(10)
-        .background(Color(.systemPink).opacity(0.10))
+          ZStack{
+              LinearGradient(gradient: Gradient(colors: [.blue.opacity(0.3),  .pink.opacity(0.6)]), startPoint: .top, endPoint: .bottom)
+                  .edgesIgnoringSafeArea(.all)
+              VStack (alignment: .leading){
+                
+                 topview()
+                 bottomview2()
+                   myfavorite()
+                              
+              }.padding(10)
+            .background(Color(.systemPink).opacity(0.10))
+          }
        }
     }
 }
+
 struct topview:View {
     var body: some View {
         HStack{
@@ -50,7 +55,7 @@ struct bottomview2:View {
                     Rectangle()
                         .frame(width: 360, height: 50)
                         .foregroundColor(.gray)
-                        .opacity(0.1)
+                        .opacity(0.3)
                         .cornerRadius(10)
                     HStack{
                         NavigationLink{
@@ -73,7 +78,7 @@ struct bottomview2:View {
                     Rectangle()
                         .frame(width: 360, height: 50)
                         .foregroundColor(.gray)
-                        .opacity(0.1)
+                        .opacity(0.3)
                         .cornerRadius(10)
                     HStack{
                        
@@ -99,7 +104,7 @@ struct bottomview2:View {
                     Rectangle()
                         .frame(width: 360, height: 50)
                         .foregroundColor(.gray)
-                        .opacity(0.1)
+                        .opacity(0.3)
                         .cornerRadius(10)
                     HStack{
                        
@@ -156,8 +161,8 @@ struct myfavorite: View {
                        ZStack(alignment: .leading){
                            Rectangle()
                                .frame(height: 80)
-                               .foregroundStyle(Color.black)
-                               .opacity(0.1)
+                               .foregroundStyle(Color.white)
+                               .opacity(0.5)
                        
                                Text("\(restaurantlist[img])")
                                .foregroundStyle(Color.black)

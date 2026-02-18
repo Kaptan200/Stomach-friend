@@ -14,22 +14,23 @@ struct ContentView: View {
    @State var isliked:Bool = false
    var body: some View {
        NavigationStack{
-           Rectangle()
-               .scaledToFill()
-               .frame( height: 10)
-               .foregroundStyle(Color.pink)
-               .opacity(0.10)
+          
            TabView{
                
-               VStack(alignment: .leading, spacing: 16){
-                   
-                   ScrollView{
-                       topheaderview()
-                         bottomview( isliked: $isliked)
-                        scrollview( isliked: $isliked)
-                   }
-               }.padding(10)
-                .background(Color(.systemPink).opacity(0.10))
+               ZStack{
+                   LinearGradient(gradient: Gradient(colors: [.blue.opacity(0.3),  .pink.opacity(0.6)]), startPoint: .top, endPoint: .bottom)
+                       .edgesIgnoringSafeArea(.all)
+                   VStack(alignment: .leading, spacing: 16){
+                      
+                       ScrollView{
+                           
+                           topheaderview()
+                             bottomview( isliked: $isliked)
+                            scrollview( isliked: $isliked)
+                       }
+                   }.padding(10)
+               }
+              
                .tabItem {
                     Image(systemName: "house")
                         .foregroundStyle(.red)
@@ -45,7 +46,7 @@ struct ContentView: View {
                    profilepageView()
                }.tabItem {
                    Image(systemName: "person.fill")
-                    Text("search")
+                    Text("profile")
                }
            }
        }.toolbar(.hidden)
