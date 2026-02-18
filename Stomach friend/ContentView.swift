@@ -10,8 +10,14 @@ var movielist = ["food1", "food2","food3", "food4", "food5"]
 var catogarylist = ["Roti sabzi", "Fast food","Dosa", "Veg plate","paneer tikka"]
 var restaurantlist = [" North indian", " Burger Hub"," South Indian", "Tau di chaat", "Non veg food"]
 var restaurantimg = ["rest1", "rest2","rest4", "rest3", "rest4"]
+struct Cardnames3: Identifiable{
+    var id = UUID()
+    var name:String
+    var category:String
+    var isliked:Bool
+}
 struct ContentView: View {
-   @State var isliked:Bool = false
+  
    var body: some View {
        NavigationStack{
           
@@ -25,8 +31,8 @@ struct ContentView: View {
                        ScrollView{
                            
                            topheaderview()
-                             bottomview( isliked: $isliked)
-                            scrollview( isliked: $isliked)
+                             bottomview()
+                            scrollview( )
                        }
                    }.padding(10)
                }
@@ -83,44 +89,54 @@ struct topheaderview: View {
     }
 }
 struct bottomview: View {
-    @Binding var isliked: Bool
+    @State private var card3:[Cardnames3] = []
+    init(){
+        _card3 = State(initialValue: newcard3())
+    }
     var column10 = [
-        GridItem(.flexible(minimum: 50, maximum: 250),spacing: 10),
-        GridItem(.flexible(minimum: 50, maximum: 250),spacing: 10),]
+        GridItem(.flexible(minimum: 50, maximum: .infinity),spacing: 10),
+        GridItem(.flexible(minimum: 50, maximum: .infinity),spacing: 10),]
     var body: some View {
         LazyVGrid(columns: column10, spacing: 20){
-            ForEach(movielist.indices, id: \.self) { img in
-                  
+            ForEach(card3.indices, id: \.self) { img in
+                
                 VStack(spacing: -10){
                     ZStack{
-                        Image("\(movielist[img])")
+                        Image(card3[img].name)
                         .resizable()
                         .frame(minHeight: 50)
-                        .frame(maxHeight: 150)
-                        .aspectRatio(1/1.5, contentMode: .fill)
+                        .frame(maxHeight: 250)
+                        .aspectRatio(1/1, contentMode: .fill)
                         .clipped()
-                        ZStack{
-                            Rectangle()
-                            .frame(width: 30, height: 30)
-                            .foregroundStyle(Color.white)
-                            .cornerRadius(9)
-                            Button{
-                                isliked.toggle()
-                       
-                            }label: {
-                                Image(systemName: isliked ? "heart" :"heart.fill")
-                                    .foregroundStyle(Color.red)
-                                  
+                        VStack{
+                            HStack{
+                                Spacer()
+                                ZStack{
+                                    Rectangle()
+                                    .frame(width: 30, height: 30)
+                                    .foregroundStyle(Color.white)
+                                    .cornerRadius(9)
+                                    Button{
+                                        card3[img].isliked.toggle()
+                               
+                                    }label: {
+                                        Image(systemName: card3[img].isliked ? "heart.fill" :"heart")
+                                            .foregroundStyle(Color.red)
+                                          
+                                    }
+                                }
+                                
                             }
+                            .padding(.trailing, 20)
+                            Spacer()
                         }
-                            .padding(EdgeInsets(top: -60, leading: 140, bottom: 0, trailing: 0))
+                        .padding(.top, 20)
                     }
                     
                     ZStack(alignment: .leading){
                         Rectangle()
-                            .frame(height: 80)
-                            .foregroundStyle(Color.black)
-                            .opacity(0.1)
+                            .frame(height: 60)
+                            .foregroundStyle(Color.white)
                     
                             Text("\(catogarylist[img])")
                             .foregroundStyle(Color.black)
@@ -129,13 +145,12 @@ struct bottomview: View {
                     }
                 }
                 .cornerRadius(20)
-                       }
+                    }
                    }
-                  
     }
 }
 struct scrollview: View {
-    @Binding var isliked: Bool
+   
     var body: some View {
         HStack{
             Text("Popular Restaurants")
@@ -159,7 +174,7 @@ struct scrollview: View {
                                  .frame(minHeight: 50)
                                  .frame(maxHeight: 150)
                                  .frame(width: 200)
-                                 .aspectRatio(1/1.5, contentMode: .fill)
+                                 .aspectRatio(1/1, contentMode: .fill)
                                  .clipped()
                              }
                              
@@ -195,6 +210,13 @@ struct scrollview: View {
              }
         }
     }
+}
+func newcard3() -> [Cardnames3]{
+    var cards: [Cardnames3] = []
+    for i in movielist{
+        cards.append(Cardnames3(name:  "\(i)", category: "restaurantlist", isliked: false))
+    }
+    return cards
 }
 #Preview {
     ContentView()

@@ -26,12 +26,12 @@ struct LoginPage: View {
                  Text("Stomach friend")
                        .font(.largeTitle.italic())
                        .bold()
-                       .foregroundStyle(Color.orange)
+                       .foregroundStyle(Color.black)
                    HStack{
                        Text("sign in")
                            .font(.title3)
                            .bold()
-                           .foregroundStyle(Color.orange)
+                           .foregroundStyle(Color.black)
                            .padding(.bottom, 5)
                            .overlay(Rectangle().frame(height: 2).foregroundColor(.orange), alignment: .bottom)
                        Spacer()
@@ -43,20 +43,20 @@ struct LoginPage: View {
                        .padding(20)
                    VStack(alignment: .leading, spacing: 5){
                        Text("E-mail address")
-                           .foregroundStyle(Color.gray)
+                           .foregroundStyle(Color.black)
                        
                        TextField("Enter your email", text: $email)
                           .frame(height: 15)
                           .padding()
-                          .background(Color(.systemGray).opacity(0.5))
+                          .background(Color(.white).opacity(0.5))
                            .cornerRadius(8)
                        Text("password")
-                           .foregroundStyle(Color.gray)
+                           .foregroundStyle(Color.black)
                        
                      SecureField("password", text: $password)
                             .frame(height: 15)
                           .padding()
-                           .background(Color(.systemGray).opacity(0.5))
+                           .background(Color(.white).opacity(0.5))
                            .cornerRadius(8)
                        
                    }.padding(.horizontal, 40)
@@ -82,7 +82,7 @@ struct LoginPage: View {
                                .foregroundStyle(Color.white)
                                .frame(maxWidth: .infinity)
                                .padding()
-                               .background(Color.orange)
+                               .background(Color.blue)
                                .cornerRadius(25)
                        }
                    }
@@ -101,7 +101,7 @@ struct LoginPage: View {
                            .foregroundColor(.gray.opacity(0.5))
                    }
                    Text("Sign in using")
-                       .foregroundStyle(Color.gray)
+                       .foregroundStyle(Color.black)
                    HStack(spacing:30){
                        Image(systemName: "applelogo")
                            .resizable()

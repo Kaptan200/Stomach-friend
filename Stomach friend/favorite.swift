@@ -17,8 +17,8 @@ struct favoriteview: View {
         _card = State(initialValue: newcard())
     }
     var column10 = [
-    GridItem(.flexible(minimum: 50, maximum: 250),spacing: 10),
-    GridItem(.flexible(minimum: 50, maximum: 250),spacing: 10),]
+    GridItem(.flexible(minimum: 50, maximum: .infinity),spacing: 10),
+    GridItem(.flexible(minimum: 50, maximum: .infinity),spacing: 10),]
     var body: some View {
        
         NavigationStack{
@@ -55,34 +55,42 @@ struct favoriteview: View {
                                         Image(card[img].name)
                                         .resizable()
                                         .frame(minHeight: 50)
-                                        .frame(maxHeight: 150)
-                                        .aspectRatio(1/1.5, contentMode: .fill)
+                                        .frame(maxHeight: 250)
+                                        .aspectRatio(1/1, contentMode: .fill)
                                         .clipped()
-                                        ZStack{
-                                            Rectangle()
-                                            .frame(width: 30, height: 30)
-                                            .foregroundStyle(Color.white)
-                                            .cornerRadius(9)
-                                            Button{
-                                                card[img].isliked.toggle()
-                                       
-                                            }label: {
-                                                Image(systemName: card[img].isliked ? "heart.fill" :"heart")
-                                                    .foregroundStyle(Color.red)
-                                                  
+                                        VStack{
+                                            HStack{
+                                                Spacer()
+                                                ZStack{
+                                                    Rectangle()
+                                                    .frame(width: 30, height: 30)
+                                                    .foregroundStyle(Color.white)
+                                                    .cornerRadius(9)
+                                                    Button{
+                                                        card[img].isliked.toggle()
+                                               
+                                                    }label: {
+                                                        Image(systemName: card[img].isliked ? "heart.fill" :"heart")
+                                                            .foregroundStyle(Color.red)
+                                                          
+                                                    }
+                                                }
+                                                
                                             }
-                                        }.padding(EdgeInsets(top: -60, leading: 140, bottom: 0, trailing: 0))
+                                            .padding(.trailing, 20)
+                                            Spacer()
+                                        }
+                                        .padding(.top, 20)
                                     }
                                     
                                     ZStack(alignment: .leading){
                                         Rectangle()
-                                            .frame(height: 80)
+                                            .frame(height: 60)
                                             .foregroundStyle(Color.white)
-                                            .opacity(0.5)
                                     
-                                            Text("\(restaurantlist[img])")
+                                            Text("\(catogarylist[img])")
                                             .foregroundStyle(Color.black)
-                                            .font(.system(size: 13, weight: .bold))
+                                            .font(.system(size: 15, weight: .bold))
                                             .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 0))
                                     }
                                 }
