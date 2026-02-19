@@ -90,19 +90,23 @@ struct bottomview2:View {
                     .background(Color(.systemGray).opacity(0.3))
                     .cornerRadius(10)
                 }
-                HStack{
-                    Image(systemName: "star.fill")
-                        .font(.title)
-                        .foregroundColor(.yellow)
-                    Text("Write a review")
-                        .bold()
-                    Spacer()
-                    Image(systemName: "chevron.right")
-                     
-                 }
-                .padding()
-                .background(Color(.systemGray).opacity(0.3))
-                .cornerRadius(10)
+                NavigationLink{
+                    reviewpage()
+                }label: {
+                    HStack{
+                        Image(systemName: "star.fill")
+                            .font(.title)
+                            .foregroundColor(.yellow)
+                        Text("Write a review")
+                            .bold()
+                        Spacer()
+                        Image(systemName: "chevron.right")
+                         
+                     }.foregroundStyle(Color.primary)
+                    .padding()
+                    .background(Color(.systemGray).opacity(0.3))
+                    .cornerRadius(10)
+                }
             }
         }
     }

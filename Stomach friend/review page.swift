@@ -11,12 +11,13 @@ struct review: Identifiable{
     let rating: Int
     let comment: String
 }
-struct review_page: View {
+struct reviewpage: View {
     @State private var name: String = ""
     @State private var rating: Int = 0
     @State private var comment: String = ""
     @State private var reviews: [review] = []
     var body: some View {
+    NavigationStack{
         VStack{
             VStack(alignment: .leading,spacing: 12){
                 Text("write a review")
@@ -45,7 +46,7 @@ struct review_page: View {
                     .foregroundColor(.white)
                     .cornerRadius(10)
             
-                }
+            }.padding(10)
             List(reviews){review in
                 VStack(alignment: .leading, spacing: 8){
                     HStack{
@@ -68,10 +69,11 @@ struct review_page: View {
                 }
                 .padding(.vertical, 5)
             }
-        }.navigationTitle("restaurant reviews")
+        }
+        }
         }
     }
 
 #Preview {
-    review_page()
+    reviewpage()
 }
