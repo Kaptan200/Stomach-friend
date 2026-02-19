@@ -5,6 +5,7 @@
 //  Created by applelab03 on 2/11/26.
 //
 import SwiftUI
+import Combine
 struct LoginPage: View {
     @State private var email = ""
     @State private var password = ""
@@ -41,25 +42,7 @@ struct LoginPage: View {
                            .foregroundStyle(Color.gray)
                    }.padding(.horizontal, 40)
                        .padding(20)
-                   VStack(alignment: .leading, spacing: 5){
-                       Text("E-mail address")
-                           .foregroundStyle(Color.black)
-                       
-                       TextField("Enter your email", text: $email)
-                          .frame(height: 15)
-                          .padding()
-                          .background(Color(.white).opacity(0.5))
-                           .cornerRadius(8)
-                       Text("password")
-                           .foregroundStyle(Color.black)
-                       
-                     SecureField("password", text: $password)
-                            .frame(height: 15)
-                          .padding()
-                           .background(Color(.white).opacity(0.5))
-                           .cornerRadius(8)
-                       
-                   }.padding(.horizontal, 40)
+                
                    HStack{
                        Toggle("Remember me", isOn: $rememberMe)
                            .labelsHidden()
@@ -70,22 +53,7 @@ struct LoginPage: View {
                        Text("Forgot password?")
                            .font(.footnote)
                    }.padding(.horizontal, 40)
-                   Button(action: {
-                       print("login tapped")
-                   }) {
-                       NavigationLink{
-                           first_page()
-                       }label: {
-                           Text("login")
-                               .font(.headline)
-                               .bold()
-                               .foregroundStyle(Color.white)
-                               .frame(maxWidth: .infinity)
-                               .padding()
-                               .background(Color.blue)
-                               .cornerRadius(25)
-                       }
-                   }
+                
                    .buttonStyle(.plain)
                    .padding(.horizontal, 40)
                    .padding(.top, 10)
@@ -125,6 +93,90 @@ struct LoginPage: View {
        }
         }
         
+    }
+}
+struct signinview: View {
+    @ObservedObject var auth: authviewmodel
+    @State private var email = ""
+    @State private var password = ""
+ 
+    var body: some View {
+        VStack(alignment: .leading, spacing: 5){
+            Text("E-mail address")
+                .foregroundStyle(Color.black)
+            
+            TextField("Enter your email", text: $email)
+               .frame(height: 15)
+               .padding()
+               .background(Color(.white).opacity(0.5))
+                .cornerRadius(8)
+            Text("password")
+                .foregroundStyle(Color.black)
+            
+          SecureField("password", text: $password)
+                 .frame(height: 15)
+               .padding()
+                .background(Color(.white).opacity(0.5))
+                .cornerRadius(8)
+            Button(action: { auth.login(email: email, password: password) }) {
+                      Text("Log In")
+                          .frame(maxWidth: .infinity)
+                          .padding()
+                          .background(Color.black)
+                          .foregroundStyle(.white)
+                          .clipShape(RoundedRectangle(cornerRadius: 10))
+                  }
+                  .disabled(auth.isLoading)
+            
+        }.padding(.horizontal, 40)
+    }
+}
+final class authviewmodel: ObservableObject {
+    @Published var isauthenticated: Bool = false
+    
+    @Published var isLoading: Bool = false
+    @Published var errormessage: String?
+    private var users:[String: String] = [:]
+    
+    func login(email: String, password: String){
+        errormessage = nil
+        isLoading=true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) { [weak self] in
+            guard let self else {return}
+            self.isLoading=false
+            if email.isEmpty || password.isEmpty{
+                self.errormessage = "PLEASE ENTER EMAIL AND PASSWORD."
+            }
+            guard let savedpassword = self.users[email] else {
+                self.errormessage = "NO ACCOUNT FOUND FOR THIS EMAIL. PLEASE SIGN UP"
+                return
+            }
+            guard password == savedpassword else {
+                self.errormessage = "INCORRECT PASSWORD"
+                return
+            }
+            self.errormessage = nil
+            self.isauthenticated = true
+        }
+    }
+    
+    func signup(email: String, password: String, username: String){
+        errormessage = nil
+        isLoading=true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) { [weak self] in
+            guard let self else {return}
+            self.isLoading=false
+            if email.isEmpty || password.isEmpty || username.isEmpty{
+                self.errormessage = "PLEASE ENTER EMAIL AND PASSWORD."
+                return
+            }
+            self.users[email] = password
+            self.errormessage = nil
+            self.isauthenticated = true
+        }
+    }
+    func logout(){
+        isauthenticated = false
     }
 }
 #Preview{
