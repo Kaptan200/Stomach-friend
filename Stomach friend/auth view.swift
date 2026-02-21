@@ -10,6 +10,7 @@ final class AuthViewModel: ObservableObject {
     @Published var isAuthenticated: Bool = false
     @Published var isLoading: Bool = false
     @Published var errorMessage: String?
+   
     private var users: [String: String] = [:]
 //    email -> password
     func login(email: String, password: String) {
@@ -31,6 +32,7 @@ final class AuthViewModel: ObservableObject {
                 self.errorMessage = "Password is incorrect."
                 return
             }
+         
             self.errorMessage = nil
             self.isAuthenticated = true
         }
@@ -45,10 +47,12 @@ final class AuthViewModel: ObservableObject {
                 self.errorMessage = "Please fill all fields."
                 return
             }
-            // Add or update the user in-memory
-            self.users[email] = password
-            self.errorMessage = nil
-            self.isAuthenticated = true
+    
+
+                self.users[email] = password
+                self.errorMessage = nil
+                self.isAuthenticated = true
+
         }
     }
     func logout() {
@@ -59,57 +63,65 @@ final class AuthViewModel: ObservableObject {
         @ObservedObject var auth: AuthViewModel
         @State private var selection: Int = 0
         var body: some View {
-            ZStack{
-                LinearGradient(gradient: Gradient(colors: [.pink.opacity(0.3),  .purple.opacity(0.6)]), startPoint: .top, endPoint: .bottom)
-                    .edgesIgnoringSafeArea(.all)
-                VStack{
-                    Image("logo")
-                     .resizable()
-                     .scaledToFill()
-                     .frame(width: 300, height: 280)
-                     .clipShape(Circle())
-                     .background(Color(.systemPink).opacity(0.10))
-                     .padding(EdgeInsets(top: -100, leading: 0, bottom: 0, trailing: 200))
-                    VStack(spacing: 20) {
-                         Text("Stomach friend")
-                              .font(.largeTitle.italic())
-                              .bold()
-                              .foregroundStyle(Color.black)
-                        Picker("Auth", selection: $selection) {
-                            Text("Log In").tag(0)
-                            Text("Sign Up").tag(1)
-                        }
-                        .pickerStyle(.segmented)
-                        .padding(.horizontal)
-                        if selection == 0 {
-                            LoginView(auth: auth)
-                        }
-                        else{
-                            Signup2View(auth: auth)
-                        }
-                        if let error = auth.errorMessage {
-                            Text(error)
-                                .font(.footnote)
-                                .foregroundStyle(.red)
-                                .padding(.horizontal)
-                        }
-                        if auth.isLoading {
-                            ProgressView().padding(.top, 8)
-                        }
-                        Spacer()
-                    }
-                    .padding(50)
-                }
-            }
+       NavigationStack{
+           ZStack{
+               LinearGradient(gradient: Gradient(colors: [.pink.opacity(0.3),  .purple.opacity(0.6)]), startPoint: .top, endPoint: .bottom)
+                   .edgesIgnoringSafeArea(.all)
+               VStack{
+                   Image("logo")
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 300, height: 280)
+                    .clipShape(Circle())
+                    .background(Color(.systemPink).opacity(0.10))
+                    .padding(EdgeInsets(top: -100, leading: 0, bottom: 0, trailing: 200))
+                   VStack(spacing: 20) {
+                       ZStack{
+                           Text("Stomach friend")
+                                .font(.largeTitle.italic())
+                                .bold()
+                                .foregroundStyle(Color.white)
+                           Text("Stomach friend")
+                               .font(.system(size: 33.9).italic())
+                                .bold()
+                                .foregroundStyle(Color.black)
+                       }
+                       Picker("Auth", selection: $selection) {
+                           Text("Log In").tag(0)
+                           Text("Sign Up").tag(1)
+                       }
+                       .pickerStyle(.segmented)
+                       .padding(.horizontal)
+                       if selection == 0 {
+                           LoginView(auth: auth)
+                       }
+                       else{
+                           Signup2View(auth: auth)
+                       }
+                       if let error = auth.errorMessage {
+                           Text(error)
+                               .font(.footnote)
+                               .foregroundStyle(.red)
+                               .padding(.horizontal)
+                       }
+                       if auth.isLoading {
+                           ProgressView().padding(.top, 8)
+                       }
+                       Spacer()
+                   }
+                   .padding(50)
+               }
+           }
+       }.toolbar(.hidden)
         }
     }
 struct LoginView: View {
     @ObservedObject var auth: AuthViewModel
     @State private var email: String = ""
     @State private var password: String = ""
-    @State private var rememberMe: Bool = false
+   
     var body: some View {
-        VStack(spacing: 10) {
+        VStack{
             TextField("Email", text: $email)
                 .frame(height: 15)
                 .padding()
@@ -124,15 +136,13 @@ struct LoginView: View {
             }) {
                 VStack(spacing: 30){
                     HStack{
-                        Toggle("Remember me", isOn: $rememberMe)
-                            .labelsHidden()
-                            Text("I agree to the terms of service")
-                            .font(Font.footnote)
-                        Spacer()
+                     
+                       Spacer()
                         
                         Text("Forgot password?")
                             .font(.footnote)
-                    }.padding(-10)
+                            .bold()
+                    }.padding(EdgeInsets(top: 0, leading: -40, bottom: 0, trailing: -20))
                 
                     Text("Log In")
                         .frame(maxWidth: .infinity)
@@ -186,6 +196,7 @@ struct Signup2View: View {
     @State private var username: String = ""
     @State private var email: String = ""
     @State private var password: String = ""
+   
     var body: some View {
         VStack(spacing: 10) {
             TextField("Username", text: $username)
@@ -203,6 +214,12 @@ struct Signup2View: View {
                 .padding()
                 .background(Color(.white).opacity(0.5))
                  .cornerRadius(8)
+//            HStack{
+//                Toggle("Remember me", isOn: $rememberMe)
+//                    .labelsHidden()
+//                    Text("I agree to the terms ")
+//                    .font(Font.footnote)
+//            }.padding(EdgeInsets(top: 0, leading: -50, bottom: 0, trailing: 0))
             Button(action: { auth.signup(email: email, password: password, username: username) })
             {
                 Text("Create Account")

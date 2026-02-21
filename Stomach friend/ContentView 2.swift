@@ -25,6 +25,7 @@ struct profilepageView: View {
                  topview()
                  bottomview2()
                    myfavorite()
+                  logut(auth: AuthViewModel())
                               
               }.padding(10)
             .background(Color(.systemPink).opacity(0.10))
@@ -57,7 +58,7 @@ struct bottomview2:View {
            
             VStack(spacing:-1){
                 NavigationLink{
-                    PopularRestaurant()
+                    favoriteview()
                 }label: {
                     HStack{
                         Image(systemName: "bookmark.fill")
@@ -74,7 +75,7 @@ struct bottomview2:View {
                     .cornerRadius(10)
                 }
                 NavigationLink{
-                    favoriteview()
+                    PopularRestaurant()
                 }label: {
                     HStack{
                         Image(systemName: "map.fill")
@@ -187,6 +188,30 @@ func new2card() -> [phpnames]{
     }
     return cards2
 }
+
+struct logut: View {
+    @ObservedObject var auth: AuthViewModel
+    var body: some View {
+        HStack{
+            Spacer()
+            Button(action: {
+                auth.logout()
+            }){
+                NavigationLink{
+                    ContentView5()
+                }label:{
+                    Text("Logout \(Image(systemName: "rectangle.portrait.and.arrow.right"))")
+                        .foregroundColor(.white)
+                        .padding()
+                        .background(Color(.systemPink))
+                        .shadow(radius: 10)
+                }
+            }
+            Spacer()
+        }
+        }
+    }
+
 #Preview {
     profilepageView()
 }

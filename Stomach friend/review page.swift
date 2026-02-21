@@ -20,6 +20,18 @@ struct reviewpage: View {
     NavigationStack{
         VStack{
             VStack(alignment: .leading,spacing: 12){
+                HStack(spacing: 130){
+                    NavigationLink{
+                        profilepageView()
+                    }label: {
+                       Image(systemName: "chevron.left")
+                    }.foregroundStyle(.primary)
+                  
+                    Text("Reviews")
+                        .font(.title)
+                        .bold()
+                    
+                }
                 Text("write a review")
                     .font(.title2)
                     .bold()

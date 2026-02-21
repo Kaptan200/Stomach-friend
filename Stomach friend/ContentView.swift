@@ -17,7 +17,7 @@ struct Cardnames3: Identifiable{
     var isliked:Bool
 }
 struct ContentView: View {
-  
+ 
    var body: some View {
        NavigationStack{
           
@@ -59,6 +59,7 @@ struct ContentView: View {
     }
 }
 struct topheaderview: View {
+    @State private var search:String = ""
     var body: some View {
         HStack{
             VStack(alignment: .leading){
@@ -73,18 +74,11 @@ struct topheaderview: View {
                  .font(.title3)
         }
         .padding(.horizontal)
-   HStack{
-       Image(systemName: "magnifyingglass")
-           .foregroundStyle(Color.gray)
-       Text("search for dishes or restaurants...")
-           .foregroundStyle(Color.gray)
-       Spacer()
-       Image(systemName: "mic.fill")
-        .foregroundStyle(Color.gray)
-    }
-   .padding()
-   .background(Color(.systemBlue).opacity(0.10))
-   .cornerRadius(120)
+        TextField("\(Image(systemName: "magnifyingglass")) search for dishes and restaurants ", text: $search)
+            .frame(height: 15)
+            .padding()
+            .background(Color(.white).opacity(0.5))
+            .cornerRadius(8)
   
     }
 }
