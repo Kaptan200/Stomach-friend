@@ -29,7 +29,7 @@ struct profilepageView: View {
                           .font(Font.title.bold())
                   }
                    myfavorite()
-                  logut(auth: AuthViewModel())
+                 
                               
               }.padding(10)
             .background(Color(.systemPink).opacity(0.10))
@@ -89,7 +89,7 @@ struct bottomview2:View {
                     .cornerRadius(10)
                 }
                 NavigationLink{
-                    PopularRestaurant()
+                    VisitedRestaurantsView()
                 }label: {
                     HStack{
                         Image(systemName: "map.fill")
@@ -187,7 +187,9 @@ struct myfavorite: View {
                     }
                     .cornerRadius(20)
                         }
+              
                        }
+            logut(auth: AuthViewModel())
                         
         }
         }

@@ -17,8 +17,7 @@ struct Cardnames3: Identifiable{
     var isliked:Bool
 }
 struct ContentView: View {
- 
-   var body: some View {
+  var body: some View {
        NavigationStack{
           
            TabView{

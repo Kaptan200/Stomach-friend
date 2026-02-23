@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyBVFrHmoUvypfSEbxp0YL--XPlF2MNJEuU</string>
+	<key>GCM_SENDER_ID</key>
+	<string>188681969776</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>Stomach-friend.Stomach-friend</string>
+	<key>PROJECT_ID</key>
+	<string>stomach-friend</string>
+	<key>STORAGE_BUCKET</key>
+	<string>stomach-friend.firebasestorage.app</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:188681969776:ios:56d4a7e3037e32cf7c94b5</string>
+</dict>
+</plist>
