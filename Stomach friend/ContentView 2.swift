@@ -24,13 +24,17 @@ struct profilepageView: View {
                 
                  topview()
                  bottomview2()
+                  HStack{
+                      Text("My  Favorites")
+                          .font(Font.title.bold())
+                  }
                    myfavorite()
                   logut(auth: AuthViewModel())
                               
               }.padding(10)
             .background(Color(.systemPink).opacity(0.10))
           }
-       }
+      }.toolbar(.hidden)
     }
 }
 
@@ -43,9 +47,19 @@ struct topview:View {
                 .clipShape(Circle())
                 .shadow(radius: 10)
             VStack(alignment: .leading){
-                Text("Kaptan")
-                    .font(.title)
-                    .bold()
+                HStack{
+                    Text("Kaptan")
+                        .font(.title)
+                        .bold()
+                    Spacer()
+                    NavigationLink{
+                        SettingsView()
+                    } label: {
+                        Image(systemName: "gear")
+                            .bold()
+                            .foregroundStyle(Color.primary)
+                    }
+                }
                 Text("kaptanbamaniya@gmail.com")
                     .font(.title2)
              }
@@ -121,10 +135,7 @@ struct myfavorite: View {
         GridItem(.flexible(minimum: 50, maximum: .infinity),spacing: 10),
         GridItem(.flexible(minimum: 50, maximum: .infinity),spacing: 10),]
     var body: some View {
-        HStack{
-            Text("My  Favorites")
-                .font(Font.title.bold())
-        }
+    
        
         ScrollView{
             LazyVGrid(columns: column10, spacing: 20){

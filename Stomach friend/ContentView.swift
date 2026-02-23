@@ -49,6 +49,12 @@ struct ContentView: View {
                     Text("favorites")
                }
                VStack{
+                   MapView()
+               }.tabItem {
+                   Image(systemName: "map")
+                    Text("Map")
+               }
+               VStack{
                    profilepageView()
                }.tabItem {
                    Image(systemName: "person.fill")

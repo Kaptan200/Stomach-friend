@@ -28,7 +28,7 @@ struct favoriteview: View {
                 VStack(alignment:.leading){
                     HStack{
                      
-                        NavigationLink(destination: ContentView()){
+                        NavigationLink(destination: profilepageView()){
                             Image(systemName: "chevron.left")
                                 .bold()
                          }.foregroundStyle(Color.primary)
@@ -43,8 +43,7 @@ struct favoriteview: View {
                     }
                     Spacer()
                     Spacer()
-                        Text("My  Favorites")
-                            .font(Font.title.bold())
+                      
                  
                     ScrollView{
                         LazyVGrid(columns: column10, spacing: 20){

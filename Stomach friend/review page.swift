@@ -82,7 +82,7 @@ struct reviewpage: View {
                 .padding(.vertical, 5)
             }
         }
-        }
+    }.toolbar(.hidden)
         }
     }
 
