@@ -20,7 +20,7 @@ struct ContentView: View {
   var body: some View {
        NavigationStack{
           
-           TabView{
+          
                
                ZStack{
                    LinearGradient(gradient: Gradient(colors: [.blue.opacity(0.3),  .pink.opacity(0.6)]), startPoint: .top, endPoint: .bottom)
@@ -36,30 +36,8 @@ struct ContentView: View {
                    }.padding(10)
                }
               
-               .tabItem {
-                    Image(systemName: "house")
-                        .foregroundStyle(.red)
-                    Text("Explore")
-                }
-               VStack{
-                   favoriteview()
-               }.tabItem {
-                   Image(systemName: "heart")
-                    Text("favorites")
-               }
-               VStack{
-                   MapView()
-               }.tabItem {
-                   Image(systemName: "map")
-                    Text("Map")
-               }
-               VStack{
-                   profilepageView()
-               }.tabItem {
-                   Image(systemName: "person.fill")
-                    Text("profile")
-               }
-           }
+      
+           
        }.toolbar(.hidden)
     }
 }

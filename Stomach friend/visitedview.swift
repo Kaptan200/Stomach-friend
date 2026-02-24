@@ -17,7 +17,7 @@ struct Restaurant: Identifiable {
 }
 
 struct VisitedRestaurantsView: View {
-    
+    @Environment(\.dismiss) private var dismiss
     let restaurants = [
         Restaurant(name: "Bella Italiano",
                    cuisine: "Italian",
@@ -57,12 +57,11 @@ struct VisitedRestaurantsView: View {
                     
                 
                     HStack{
-                        NavigationLink{
-                            profilepageView()
-                        }label: {
+                        Button(action: { dismiss() }) {
                             Image(systemName: "chevron.left")
                                 .bold()
-                        } .foregroundStyle(.primary)
+                         }
+                         .foregroundStyle(Color.primary)
                         Spacer()
                         Text("Visited Restaurants")
                             .font(.title)

@@ -55,7 +55,7 @@ struct topview:View {
                     NavigationLink{
                         SettingsView()
                     } label: {
-                        Image(systemName: "gear")
+                        Image(systemName: "line.3.horizontal")
                             .bold()
                             .foregroundStyle(Color.primary)
                     }

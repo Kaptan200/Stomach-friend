@@ -7,6 +7,7 @@
 
 import SwiftUI
 struct PopularRestaurant: View {
+    @Environment(\.dismiss) private var dismiss
     var column10 = [
         GridItem(.flexible(minimum: 50, maximum: .infinity),spacing: 10),
         GridItem(.flexible(minimum: 50, maximum: .infinity),spacing: 10),]
@@ -17,13 +18,11 @@ NavigationStack{
             .edgesIgnoringSafeArea(.all)
         VStack(alignment:.leading){
             HStack{
-                NavigationLink{
-                    ContentView()
-                }label: {
+                Button(action: { dismiss() }) {
                     Image(systemName: "chevron.left")
-                         .foregroundStyle(Color.black)
-                         .bold()
-                }
+                        .bold()
+                 }
+                 .foregroundStyle(Color.primary)
               Spacer()
                 Text("Popular Restaurants")
                     .font(Font.title.bold())

@@ -80,7 +80,7 @@ struct HomePageView: View {
                                         print("get started Tapped")
                                     }) {
                                         NavigationLink{
-                                            ContentView()
+                                            maintab()
                                         } label: {
                                             Text("Get Started")
                                                 .font(.title)

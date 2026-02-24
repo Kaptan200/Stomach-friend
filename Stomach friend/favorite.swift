@@ -12,6 +12,7 @@ struct Cardnames: Identifiable{
     var isliked:Bool
 }
 struct favoriteview: View {
+    @Environment(\.dismiss) private var dismiss
     @State private var card:[Cardnames] = []
     init(){
         _card = State(initialValue: newcard())
@@ -28,10 +29,11 @@ struct favoriteview: View {
                 VStack(alignment:.leading){
                     HStack{
                      
-                        NavigationLink(destination: profilepageView()){
+                        Button(action: { dismiss() }) {
                             Image(systemName: "chevron.left")
                                 .bold()
-                         }.foregroundStyle(Color.primary)
+                         }
+                         .foregroundStyle(Color.primary)
                              Spacer()
                             Text("Favorites")
                                 .font(Font.title.bold())

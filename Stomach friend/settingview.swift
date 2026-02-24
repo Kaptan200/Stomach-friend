@@ -7,17 +7,16 @@
 import SwiftUI
 
 struct SettingsView: View {
-    
+    @Environment(\.dismiss) private var dismiss
     var body: some View {
         NavigationStack {
             VStack{
                 HStack{
-                    NavigationLink{
-                        profilepageView()
-                    }label: {
+                    Button(action: { dismiss() }) {
                         Image(systemName: "chevron.left")
                             .bold()
-                    }.foregroundStyle(.primary)
+                     }
+                     .foregroundStyle(Color.primary)
                     Spacer()
                     Text("Settings")
                         .font(.largeTitle)
@@ -28,15 +27,35 @@ struct SettingsView: View {
                 List {
                     Section("Account") {
                         Text("Edit profile")
-                        Text("Your orders")
-                        Text("History")
+                        NavigationLink{
+                            YourOrderView()
+                        }label: {
+                            Text("Your orders")
+                        }
+                        NavigationLink{
+                            OrderHistoryView()
+                        }label: {
+                            Text("History")
+                        }
                       
                     }
                     
                     Section("Other") {
-                        Text("Privacy policy")
-                        Text("Help and support")
-                        Text("About us")
+                        NavigationLink{
+                            PrivacyView()
+                        }label: {
+                            Text("Privacy policy")
+                        }
+                        NavigationLink{
+                            HelpView()
+                        }label: {
+                            Text("Help and support")
+                        }
+                        NavigationLink{
+                            AboutView()
+                        }label: {
+                            Text("About us")
+                        }
                        
                     }
                 }
