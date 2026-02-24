@@ -26,7 +26,11 @@ struct SettingsView: View {
                     
                 List {
                     Section("Account") {
-                        Text("Edit profile")
+                        NavigationLink{
+                            EditProfileView()
+                        }label: {
+                            Text("Edit profile")
+                        }
                         NavigationLink{
                             YourOrderView()
                         }label: {
