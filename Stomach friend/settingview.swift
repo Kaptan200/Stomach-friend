@@ -63,6 +63,20 @@ struct SettingsView: View {
                        
                     }
                 }
+                Button(action: {
+                    print("Delete Account")
+                }) {
+                    Text("Delete Account")
+                        .fontWeight(.semibold)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.red)
+                        .foregroundColor(.white)
+                        .cornerRadius(12)
+                }
+                .padding(.horizontal)
+                .padding(.top)
+                
             }.background(Color(.gray.opacity(0.1)))
             
         }.toolbar(.hidden)
