@@ -178,11 +178,34 @@ struct myfavorite: View {
                             Rectangle()
                                 .frame(height: 60)
                                 .foregroundStyle(Color.white)
-                        
+                            VStack(alignment: .leading){
                                 Text("\(catogarylist[img])")
                                 .foregroundStyle(Color.black)
-                                .font(.system(size: 15, weight: .bold))
-                                .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 0))
+                                .font(.system(size: 18, weight: .bold))
+                                
+                                HStack(spacing: 1){
+                                    Image(systemName: "star.fill")
+                                        .foregroundColor(Color.yellow)
+                                        .font(.footnote)
+                                    Image(systemName: "star.fill")
+                                        .foregroundColor(Color.yellow)
+                                        .font(.footnote)
+                                    Image(systemName: "star.fill")
+                                        .foregroundColor(Color.yellow)
+                                        .font(.footnote)
+                                    Image(systemName: "star.fill")
+                                        .foregroundColor(Color.yellow)
+                                        .font(.footnote)
+                                    Image(systemName: "star.fill")
+                                        .foregroundColor(Color.gray)
+                                        .font(.footnote)
+                                }
+                               
+                                
+                                Text("$120")
+                          
+                            }
+                            .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 0))
                         }
                     }
                     .cornerRadius(20)
