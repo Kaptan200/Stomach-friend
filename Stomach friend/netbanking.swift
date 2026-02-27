@@ -10,6 +10,7 @@ struct NetBankingPaymentView: View {
     
     @State private var selectedBank: String = ""
     @State private var selectedOtherBank: String = "Select Bank"
+    @State private var showPaymentSuccess: Bool = false
     
     let banks = [
         "State Bank of India",
@@ -34,8 +35,7 @@ struct NetBankingPaymentView: View {
             HStack {
                 Text("Net Banking")
                     .font(.title3)
-                Spacer()
-                Image(systemName: "chevron.right")
+              
             }
             .padding(.horizontal)
             
@@ -101,7 +101,7 @@ struct NetBankingPaymentView: View {
             HStack(spacing: 20) {
                 
                 Button(action: {
-                    print("Make Payment tapped")
+                    showPaymentSuccess = true
                 }) {
                     Text("Make Payment")
                         .foregroundColor(.white)
@@ -123,6 +123,12 @@ struct NetBankingPaymentView: View {
             .padding(.horizontal)
             
             Spacer()
+        }
+        .sheet(isPresented: $showPaymentSuccess) {
+            PaymentSuccessView(
+                amount: 2163.42,
+                transactionID: "TXN123456789"
+            )
         }
         .background(Color(.systemGray6))
     }
