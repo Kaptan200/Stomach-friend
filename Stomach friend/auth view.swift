@@ -135,14 +135,18 @@ struct LoginView: View {
             Button(action: { auth.login(email: email, password: password)
             }) {
                 VStack(spacing: 30){
-                    HStack{
-                     
-                       Spacer()
-                        
-                        Text("Forgot password?")
-                            .font(.footnote)
-                            .bold()
-                    }.padding(EdgeInsets(top: 0, leading: -40, bottom: 0, trailing: -20))
+                    NavigationLink{
+                        ForgotPasswordView()
+                    }label: {
+                        HStack{
+                         
+                           Spacer()
+                            
+                            Text("Forgot password?")
+                                .font(.footnote)
+                                .bold()
+                        }.padding(EdgeInsets(top: 0, leading: -40, bottom: 0, trailing: -20))
+                    }
                 
                     Text("Log In")
                         .frame(maxWidth: .infinity)
