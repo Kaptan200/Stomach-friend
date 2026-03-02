@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BF5B8E1C2F516D8C00CB5ED4 /* PAYMENT SUCCESS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5B8E1B2F516D8500CB5ED4 /* PAYMENT SUCCESS.swift */; };
+		BF5DEDB42F55580C0045A5E5 /* paymentsuccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5DEDB32F5557FD0045A5E5 /* paymentsuccess.swift */; };
 		BF62656C2F4C5C20001AE3EC /* FirebaseAI in Frameworks */ = {isa = PBXBuildFile; productRef = BF62656B2F4C5C20001AE3EC /* FirebaseAI */; };
 		BF62656E2F4C5C20001AE3EC /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = BF62656D2F4C5C20001AE3EC /* FirebaseAuth */; };
 		BF6265702F4C5C20001AE3EC /* FirebaseAuthCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = BF62656F2F4C5C20001AE3EC /* FirebaseAuthCombine-Community */; };
@@ -19,8 +19,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		BF5B8E1B2F516D8500CB5ED4 /* PAYMENT SUCCESS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PAYMENT SUCCESS.swift"; sourceTree = "<group>"; };
-		BFD82BC02F3B26A2004EAE03 /* Stomach friend.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Stomach friend.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BF5DEDB32F5557FD0045A5E5 /* paymentsuccess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = paymentsuccess.swift; sourceTree = "<group>"; };
+		BFD82BC02F3B26A2004EAE03 /* Stomach friend.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = "Stomach friend.app"; path = "/Users/applelab03/Desktop/Stomach friend/build/Debug/Stomach friend.app"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -54,17 +54,8 @@
 			isa = PBXGroup;
 			children = (
 				BFD82BC22F3B26A2004EAE03 /* Stomach friend */,
-				BFD82BC12F3B26A2004EAE03 /* Products */,
-				BF5B8E1B2F516D8500CB5ED4 /* PAYMENT SUCCESS.swift */,
+				BF5DEDB32F5557FD0045A5E5 /* paymentsuccess.swift */,
 			);
-			sourceTree = "<group>";
-		};
-		BFD82BC12F3B26A2004EAE03 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				BFD82BC02F3B26A2004EAE03 /* Stomach friend.app */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -128,7 +119,7 @@
 				BF62656A2F4C5C20001AE3EC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			preferredProjectObjectVersion = 77;
-			productRefGroup = BFD82BC12F3B26A2004EAE03 /* Products */;
+			productRefGroup = BFD82BB72F3B26A2004EAE03;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -152,7 +143,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BF5B8E1C2F516D8C00CB5ED4 /* PAYMENT SUCCESS.swift in Sources */,
+				BF5DEDB42F55580C0045A5E5 /* paymentsuccess.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

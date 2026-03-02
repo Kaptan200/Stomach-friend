@@ -98,12 +98,12 @@ struct favoriteview2: View {
                 )
                 .labelsHidden()
                 
-                Spacer(minLength: 40)
+                Spacer(minLength: 10)
                 
                 // Done Button
-                Button(action: {
-                    print("Reservation Confirmed")
-                }) {
+                NavigationLink {
+                   NetBankingPaymentView()
+                }label:{
                     Text("Done")
                         .frame(maxWidth: .infinity)
                         .padding()
@@ -115,7 +115,7 @@ struct favoriteview2: View {
             .padding()
         }
         .navigationBarTitleDisplayMode(.inline)
-        .navigationBarBackButtonHidden(true)
+       
     
     }
 }
