@@ -5,58 +5,70 @@
 //  Created by applelab03 on 2/20/26.
 //
 import SwiftUI
+import FirebaseAuth
 import Combine
+
+import SwiftUI
+import FirebaseAuth
+
 final class AuthViewModel: ObservableObject {
-    @Published var isAuthenticated: Bool = false
-    @Published var isLoading: Bool = false
+    
+    @Published var isAuthenticated: Bool
+    @Published var isLoading: Bool
     @Published var errorMessage: String?
-   
-    private var users: [String: String] = [:]
-//    email -> password
+    
+    init() {
+        self.isAuthenticated = Auth.auth().currentUser != nil
+        self.isLoading = false
+        self.errorMessage = nil
+    }
+    
+    // MARK: - Login
     func login(email: String, password: String) {
         errorMessage = nil
         isLoading = true
-        // Simulate async auth; replace with real backend later
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) { [weak self] in
-            guard let self else { return }
-            self.isLoading = false
-            if email.isEmpty || password.isEmpty {
-                self.errorMessage = "Please enter email and password."
-                return
+        
+        Auth.auth().signIn(withEmail: email, password: password) { result, error in
+            DispatchQueue.main.async {
+                self.isLoading = false
+                
+                if let error = error {
+                    self.errorMessage = error.localizedDescription
+                    return
+                }
+                
+                self.isAuthenticated = true
             }
-            guard let savedPassword = self.users[email] else {
-                self.errorMessage = "No account found for this email. Please sign up."
-                return
-            }
-            guard password == savedPassword else {
-                self.errorMessage = "Password is incorrect."
-                return
-            }
-         
-            self.errorMessage = nil
-            self.isAuthenticated = true
         }
     }
+    
+    // MARK: - Signup
     func signup(email: String, password: String, username: String) {
         errorMessage = nil
         isLoading = true
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) { [weak self] in
-            guard let self else { return }
-            self.isLoading = false
-            if email.isEmpty || password.isEmpty || username.isEmpty {
-                self.errorMessage = "Please fill all fields."
-                return
-            }
-    
-
-                self.users[email] = password
-                self.errorMessage = nil
+        
+        Auth.auth().createUser(withEmail: email, password: password) { result, error in
+            DispatchQueue.main.async {
+                self.isLoading = false
+                
+                if let error = error {
+                    self.errorMessage = error.localizedDescription
+                    return
+                }
+                
                 self.isAuthenticated = true
-
+            }
         }
     }
+    
+    // MARK: - Logout
     func logout() {
-        isAuthenticated = false
+        do {
+            try Auth.auth().signOut()
+            isAuthenticated = false
+        } catch {
+            errorMessage = error.localizedDescription
+        }
     }
 }
      struct AuthView: View {

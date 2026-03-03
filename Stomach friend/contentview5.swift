@@ -6,11 +6,9 @@
 //
 import SwiftUI
 struct ContentView5: View {
-    @StateObject private var auth = AuthViewModel()
+    @ObservedObject private var auth = AuthViewModel()
     
     var body: some View {
-        
-                
         Group{
             if auth.isAuthenticated {
                  HomePageView()
@@ -104,7 +102,11 @@ struct HomePageView: View {
             }
             }
 
-#Preview {
-    ContentView5()
+struct ContentView5_Previews: PreviewProvider {
+    
+    static var previews: some View {
+       ContentView5()
+        
+        
+    }
 }
-

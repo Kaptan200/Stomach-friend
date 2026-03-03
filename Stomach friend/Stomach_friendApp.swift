@@ -6,12 +6,19 @@
 //
 
 import SwiftUI
-
+import Firebase
 @main
 struct Stomach_friendApp: App {
-    var body: some Scene {
-        WindowGroup {
-            ContentView5()
-        }
-    }
+    @EnvironmentObject var auth: AuthViewModel
+    init() {
+            FirebaseApp.configure()
+            }
+
+            var body: some Scene {
+                WindowGroup {
+                    ContentView5()
+                        .environmentObject(auth)
+                }
+            }
+    
 }
