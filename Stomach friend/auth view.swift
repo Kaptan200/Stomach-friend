@@ -6,10 +6,8 @@
 //
 import SwiftUI
 import FirebaseAuth
+import FirebaseFirestore
 import Combine
-
-import SwiftUI
-import FirebaseAuth
 
 final class AuthViewModel: ObservableObject {
     
@@ -56,7 +54,31 @@ final class AuthViewModel: ObservableObject {
                     return
                 }
                 
-                self.isAuthenticated = true
+                guard let user = result?.user else {
+                    self.errorMessage = "Failed to create user. Please try again."
+                    return
+                }
+
+                let db = Firestore.firestore()
+                let userData: [String: Any] = [
+                    "uid": user.uid,
+                    "email": email,
+                    "username": username,
+                    "createdAt": FieldValue.serverTimestamp()
+                ]
+
+                db.collection("users").document(user.uid).setData(userData) { writeError in
+                    DispatchQueue.main.async {
+                        if let writeError = writeError {
+                            self.errorMessage = writeError.localizedDescription
+                            return
+                        }
+
+                        self.isAuthenticated = true
+                    }
+                }
+                
+//                self.isAuthenticated = true
             }
         }
     }

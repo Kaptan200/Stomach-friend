@@ -7,9 +7,10 @@
 
 import SwiftUI
 import Firebase
+
 @main
 struct Stomach_friendApp: App {
-    @EnvironmentObject var auth: AuthViewModel
+   
     init() {
             FirebaseApp.configure()
             }
@@ -17,7 +18,7 @@ struct Stomach_friendApp: App {
             var body: some Scene {
                 WindowGroup {
                     ContentView5()
-                        .environmentObject(auth)
+                      
                 }
             }
     
