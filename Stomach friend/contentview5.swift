@@ -4,11 +4,18 @@
 //
 //  Created by applelab03 on 2/20/26.
 //
+
+// Note: Make sure the image asset "food1" is included in your Assets.xcassets folder.
+
 import SwiftUI
+import Firebase
 
 struct ContentView5: View {
     
     @StateObject var auth = AuthViewModel()
+    
+    // Note: Ensure FirebaseApp.configure() is called once during app initialization,
+    // typically in the App struct or AppDelegate.
 
     var body: some View {
         Group {
