@@ -7,90 +7,73 @@
 import SwiftUI
 import FirebaseAuth
 import FirebaseFirestore
+import FirebaseCore
 import Combine
 
 final class AuthViewModel: ObservableObject {
-    
-    @Published var isAuthenticated: Bool
-    @Published var isLoading: Bool
+    @Published var isAuthenticated: Bool = false
+    @Published var isLoading: Bool = false
     @Published var errorMessage: String?
-    
-    init() {
-        self.isAuthenticated = Auth.auth().currentUser != nil
-        self.isLoading = false
-        self.errorMessage = nil
-    }
-    
-    // MARK: - Login
+   
     func login(email: String, password: String) {
         errorMessage = nil
         isLoading = true
-        
-        Auth.auth().signIn(withEmail: email, password: password) { result, error in
-            DispatchQueue.main.async {
+        if email.isEmpty || password.isEmpty {
+            self.isLoading = false
+            self.errorMessage = "Please enter email and password."
+            return
+        }
+        Auth.auth().signIn(withEmail: email, password: password) { [weak self] result, error in
+            guard let self else { return }
+            self.isLoading = false
+            if let error = error {
+                self.errorMessage = error.localizedDescription
+                return
+            }
+            self.errorMessage = nil
+            self.isAuthenticated = true
+        }
+    }
+    func signup(email: String, password: String, username: String) {
+        errorMessage = nil
+        isLoading = true
+        if email.isEmpty || password.isEmpty || username.isEmpty {
+            self.isLoading = false
+            self.errorMessage = "Please fill all fields."
+            return
+        }
+        Auth.auth().createUser(withEmail: email, password: password) { [weak self] result, error in
+            guard let self else { return }
+            if let error = error {
                 self.isLoading = false
-                
-                if let error = error {
-                    self.errorMessage = error.localizedDescription
+                self.errorMessage = error.localizedDescription
+                return
+            }
+            guard let uid = result?.user.uid else {
+                self.isLoading = false
+                self.errorMessage = "Failed to retrieve user ID."
+                return
+            }
+            let db = Firestore.firestore()
+            let userData: [String: Any] = [
+                "uid": uid,
+                "email": email,
+                "username": username,
+                "createdAt": FieldValue.serverTimestamp()
+            ]
+            db.collection("users").document(uid).setData(userData) { err in
+                self.isLoading = false
+                if let err = err {
+                    self.errorMessage = err.localizedDescription
                     return
                 }
-                
+                self.errorMessage = nil
                 self.isAuthenticated = true
             }
         }
     }
-    
-    // MARK: - Signup
-    func signup(email: String, password: String, username: String) {
-        errorMessage = nil
-        isLoading = true
-        
-        Auth.auth().createUser(withEmail: email, password: password) { result, error in
-            DispatchQueue.main.async {
-                self.isLoading = false
-                
-                if let error = error {
-                    self.errorMessage = error.localizedDescription
-                    return
-                }
-                
-                guard let user = result?.user else {
-                    self.errorMessage = "Failed to create user. Please try again."
-                    return
-                }
-
-                let db = Firestore.firestore()
-                let userData: [String: Any] = [
-                    "uid": user.uid,
-                    "email": email,
-                    "username": username,
-                    "createdAt": FieldValue.serverTimestamp()
-                ]
-
-                db.collection("users").document(user.uid).setData(userData) { writeError in
-                    DispatchQueue.main.async {
-                        if let writeError = writeError {
-                            self.errorMessage = writeError.localizedDescription
-                            return
-                        }
-
-                        self.isAuthenticated = true
-                    }
-                }
-                
-//                self.isAuthenticated = true
-            }
-        }
-    }
-    
-    // MARK: - Logout
     func logout() {
-        do {
-            try Auth.auth().signOut()
-            isAuthenticated = false
-        } catch {
-            errorMessage = error.localizedDescription
-        }
+        isAuthenticated = false
     }
 }
      struct AuthView: View {
@@ -146,7 +129,11 @@ final class AuthViewModel: ObservableObject {
                    .padding(50)
                }
            }
-       }.toolbar(.hidden)
+       }
+       .toolbar(.hidden)
+       .fullScreenCover(isPresented: Binding(get: { auth.isAuthenticated }, set: { auth.isAuthenticated = $0 })) {
+           ContentView5()
+       }
         }
     }
 struct LoginView: View {
@@ -166,7 +153,8 @@ struct LoginView: View {
                 .padding()
                 .background(Color(.white).opacity(0.5))
                  .cornerRadius(8)
-            Button(action: { auth.login(email: email, password: password)
+            Button(action: {
+                auth.login(email: email, password: password)
             }) {
                 VStack(spacing: 30){
                     NavigationLink{
@@ -306,3 +294,4 @@ struct Signup2View: View {
 #Preview {
     AuthView(auth: AuthViewModel())
 }
+
