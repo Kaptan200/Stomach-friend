@@ -106,7 +106,7 @@ final class AuthViewModel: ObservableObject {
                        Picker("Auth", selection: $selection) {
                            Text("Log In").tag(0)
                            Text("Sign Up").tag(1)
-                       }
+                         }
                        .pickerStyle(.segmented)
                        .padding(.horizontal)
                        if selection == 0 {

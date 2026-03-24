@@ -15,22 +15,11 @@ struct HelpView: View {
           ZStack {
               Color(.systemGray6)
                   .ignoresSafeArea()
-              
-              VStack {
-                  
-
-                  
-                  Spacer()
-                  
-      
-                  ZStack(alignment: .top) {
-                      
-
-                      
-                      VStack(alignment: .leading) {
-                          
-      
-                          HStack{
+             VStack {
+                Spacer()
+                 ZStack(alignment: .top) {
+                    VStack(alignment: .leading) {
+                        HStack{
                               Button(action: {dismiss()}) {
                                   Image(systemName: "chevron.left")
                                       

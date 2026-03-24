@@ -7,7 +7,7 @@
 import SwiftUI
 
 struct PaymentSuccessView: View {
-    
+    @Environment(\.dismiss) private var dismiss
     var amount: Double
     var transactionID: String
     
@@ -56,11 +56,7 @@ struct PaymentSuccessView: View {
                    }
                    
                    Spacer()
-                   
-                   // MARK: Button
-                   NavigationLink{
-                    
-                   }label: {
+                   Button(action: { dismiss() }) {
                        Text("Back to Home")
                            .foregroundColor(.white)
                            .frame(height: 50)
@@ -68,8 +64,8 @@ struct PaymentSuccessView: View {
                            .background(Color.green)
                            .cornerRadius(10)
                            .padding(.horizontal)
-                   }
-                   
+                    }
+        
                    Spacer()
                }
            }
