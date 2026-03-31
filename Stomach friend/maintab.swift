@@ -14,8 +14,7 @@ struct maintab: View {
                      .foregroundStyle(.red)
                  Text("Explore")
              }
-            
-                favoriteview()
+              favoriteview()
                 .tabItem {
                 Image(systemName: "heart")
                  Text("favorites")
