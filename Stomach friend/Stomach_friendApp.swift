@@ -22,6 +22,8 @@ struct Stomach_friendApp: App {
         WindowGroup {
             ContentView5()
                 .environmentObject(favoritesStore)
+        
         }
     }
 }
+

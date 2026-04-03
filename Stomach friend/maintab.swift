@@ -18,6 +18,11 @@ struct maintab: View {
                     Image(systemName: "house")
                     Text("Explore")
                 }
+            ReelsView()
+                .tabItem {
+                    Image(systemName: "play.rectangle")
+                    Text("Reels")
+                }
 
             favoriteview()
                 .tabItem {
@@ -36,6 +41,7 @@ struct maintab: View {
                     Image(systemName: "person.fill")
                     Text("Profile")
                 }
+            
         }
     }
 }
