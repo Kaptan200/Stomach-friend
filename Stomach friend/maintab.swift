@@ -8,8 +8,7 @@
 import SwiftUI
 
 struct maintab: View {
-    // The store flows from Stomach_friendApp down through all tabs
-    @EnvironmentObject var favoritesStore: FavoritesStore
+   @EnvironmentObject var favoritesStore: FavoritesStore
 
     var body: some View {
         TabView {

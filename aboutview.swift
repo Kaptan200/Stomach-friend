@@ -39,7 +39,7 @@ struct AboutView: View {
                             
                             // About Text
                             Text("""
-    Bharpet is your ultimate dining companion, designed to make finding the perfect restaurant effortless. Whether you're craving local favorites or exploring new culinary experiences, Findurant helps you discover the best places to eat based on your preferences, location, and dietary needs.
+    Stomach friend is your ultimate dining companion, designed to make finding the perfect restaurant effortless. Whether you're craving local favorites or exploring new culinary experiences, Findurant helps you discover the best places to eat based on your preferences, location, and dietary needs.
 
     With easy-to-use features like real-time reviews, menus, and reservation options, Findurant lets you explore a wide variety of dining choices, all in one place. From casual bites to fine dining, we’ve got you covered—making every meal memorable and every decision simple.
     """)
