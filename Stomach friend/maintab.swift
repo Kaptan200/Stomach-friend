@@ -24,10 +24,10 @@ struct maintab: View {
                     Text("Reels")
                 }
 
-            favoriteview()
+            RecipesView()
                 .tabItem {
-                    Image(systemName: "heart")
-                    Text("Favorites")
+                    Image(systemName: "crown.fill")
+                    Text("SUBSCRIPTIONS")
                 }
 
             MapView()

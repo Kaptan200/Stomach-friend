@@ -18,96 +18,103 @@ struct EditProfileView: View {
     
     var body: some View {
         NavigationView {
-            ScrollView {
-                VStack(spacing: 20) {
-                    HStack{
-                        
-                        Button(action: {dismiss()}){
-                            Image(systemName: "chevron.left")
-                        }.foregroundStyle(.primary)
-                        Spacer()
-                         Text("Edit profile")
-                           .font(Font.largeTitle.bold())
-                            .frame(maxWidth: .infinity, alignment: .center)
-                            .padding(.vertical, 10)
-                    }.padding()
-                    // MARK: - Profile Image
-                    VStack {
+           ZStack {
+               LinearGradient(
+                   gradient: Gradient(colors: [.blue.opacity(0.3), .pink.opacity(0.6)]),
+                   startPoint: .top, endPoint: .bottom
+               )
+               .edgesIgnoringSafeArea(.all)
+               ScrollView {
+                   VStack(spacing: 20) {
+                       HStack{
+                           
+                           Button(action: {dismiss()}){
+                               Image(systemName: "chevron.left")
+                           }.foregroundStyle(.primary)
+                           Spacer()
+                            Text("Edit profile")
+                              .font(Font.largeTitle.bold())
+                               .frame(maxWidth: .infinity, alignment: .center)
+                               .padding(.vertical, 10)
+                       }.padding()
+                       // MARK: - Profile Image
+                       VStack {
+                          
+                         
+                           ZStack(alignment: .bottomTrailing) {
+                               Image(systemName: "person.circle.fill") // Add your image in Assets
+                                   .resizable()
+                                   .scaledToFill()
+                                   .frame(width: 120, height: 120)
+                                   .clipShape(Circle())
+                                   .shadow(radius: 5)
+                               
+                               Button {
+                                   print("Change photo tapped")
+                               } label: {
+                                   Image(systemName: "camera.fill")
+                                       .foregroundColor(.white)
+                                       .padding(8)
+                                       .background(Color.orange)
+                                       .clipShape(Circle())
+                               }
+                           }
+                           
+                           Button("Change Photo") {
+                               print("Change photo tapped")
+                           }
+                           .foregroundColor(.orange)
+                           .padding(.top, 8)
+                       }
+                       .padding(.top)
                        
-                      
-                        ZStack(alignment: .bottomTrailing) {
-                            Image(systemName: "person.circle.fill") // Add your image in Assets
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 120, height: 120)
-                                .clipShape(Circle())
-                                .shadow(radius: 5)
-                            
-                            Button {
-                                print("Change photo tapped")
-                            } label: {
-                                Image(systemName: "camera.fill")
-                                    .foregroundColor(.white)
-                                    .padding(8)
-                                    .background(Color.orange)
-                                    .clipShape(Circle())
-                            }
-                        }
-                        
-                        Button("Change Photo") {
-                            print("Change photo tapped")
-                        }
-                        .foregroundColor(.orange)
-                        .padding(.top, 8)
-                    }
-                    .padding(.top)
-                    
-                    
-                    // MARK: - Form Fields
-                    VStack(spacing: 16) {
-                        CustomTextField(title: "Full Name", text: $fullName)
-                        CustomTextField(title: "Username", text: $username)
-                        CustomTextField(title: "Email", text: $email)
-                        CustomTextField(title: "Phone Number", text: $phone)
-                        
-                        VStack(alignment: .leading) {
-                            Text("Bio")
-                                .font(.subheadline)
-                                .foregroundColor(.gray)
-                            
-                            TextEditor(text: $bio)
-                                .frame(height: 100)
-                                .padding(8)
-                                .background(Color(.systemGray6))
-                                .cornerRadius(10)
-                        }
-                        
-                        CustomTextField(title: "Food liked", text: $cuisine)
-                        CustomTextField(title: "Location", text: $location)
-                    }
-                    .padding(.horizontal)
-                    
-                    
-                    // MARK: - Save Button
-                    Button(action: {
-                        print("Save Changes")
-                    }) {
-                        Text("Save Changes")
-                            .fontWeight(.semibold)
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(Color.orange)
-                            .foregroundColor(.white)
-                            .cornerRadius(12)
-                    }
-                    .padding(.horizontal)
-                    .padding(.top)
-                    
-                    
-                    // MARK: - Delete Account
-                  
-                }
-                .padding(.bottom, 30)
+                       
+                       // MARK: - Form Fields
+                       VStack(spacing: 16) {
+                           CustomTextField(title: "Full Name", text: $fullName)
+                           CustomTextField(title: "Username", text: $username)
+                           CustomTextField(title: "Email", text: $email)
+                           CustomTextField(title: "Phone Number", text: $phone)
+                           
+                           VStack(alignment: .leading) {
+                               Text("Bio")
+                                   .font(.subheadline)
+                                   .foregroundColor(.gray)
+                               
+                               TextEditor(text: $bio)
+                                   .frame(height: 100)
+                                   .padding(8)
+                                   .background(Color(.systemGray6))
+                                   .cornerRadius(10)
+                           }
+                           
+                           CustomTextField(title: "Food liked", text: $cuisine)
+                           CustomTextField(title: "Location", text: $location)
+                       }
+                       .padding(.horizontal)
+                       
+                       
+                       // MARK: - Save Button
+                       Button(action: {
+                           print("Save Changes")
+                       }) {
+                           Text("Save Changes")
+                               .fontWeight(.semibold)
+                               .frame(maxWidth: .infinity)
+                               .padding()
+                               .background(Color.orange)
+                               .foregroundColor(.white)
+                               .cornerRadius(12)
+                       }
+                       .padding(.horizontal)
+                       .padding(.top)
+                       
+                       
+                       // MARK: - Delete Account
+                     
+                   }
+                   .padding(.bottom, 30)
+               }
             }
           
         }.toolbar(.hidden)

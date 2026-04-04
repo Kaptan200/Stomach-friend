@@ -11,8 +11,12 @@ struct AboutView: View {
     var body: some View {
         NavigationStack{
             ZStack {
-                Color(.systemGray6)
-                    .ignoresSafeArea()
+                LinearGradient(
+                    gradient: Gradient(colors: [.blue.opacity(0.3), .pink.opacity(0.6)]),
+                    startPoint: .top, endPoint: .bottom
+                )
+                .edgesIgnoringSafeArea(.all)
+
                 
                 VStack {
                     

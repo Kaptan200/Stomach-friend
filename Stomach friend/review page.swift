@@ -20,7 +20,9 @@ struct reviewpage: View {
     var body: some View {
     NavigationStack{
         VStack{
+            
             VStack(alignment: .leading,spacing: 12){
+                
                 HStack(spacing: 130){
                     Button(action: { dismiss() }) {
                         Image(systemName: "chevron.left")

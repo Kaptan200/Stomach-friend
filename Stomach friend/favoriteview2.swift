@@ -76,18 +76,7 @@ struct favoriteview2: View {
                         .padding()
                         .background(Color.gray.opacity(0.08))
                         .cornerRadius(10)
-                    
-//                    Text(formattedDate)
-//                        .padding(.horizontal)
-//                        .padding(.vertical, 8)
-//                        .background(Color.gray.opacity(0.15))
-//                        .cornerRadius(20)
-//
-//                    Text(formattedTime)
-//                        .padding(.horizontal)
-//                        .padding(.vertical, 8)
-//                        .background(Color.gray.opacity(0.15))
-//                        .cornerRadius(20)
+       
                 }
                 
                 // Hidden DatePicker (tap to change)

@@ -62,7 +62,8 @@ struct SettingsView: View {
                         }
                        
                     }
-                }
+                } .scrollContentBackground(.hidden) // 🔥 remove white background
+                    .background(Color.clear)
 //                Button(action: {
 //                    print("Delete Account")
 //                }) {
@@ -77,7 +78,12 @@ struct SettingsView: View {
 //                .padding(.horizontal)
 //                .padding(.top)
                 
-            }.background(Color(.gray.opacity(0.1)))
+            }.background(LinearGradient(
+                gradient: Gradient(colors: [.blue.opacity(0.3), .pink.opacity(0.6)]),
+                startPoint: .top, endPoint: .bottom
+            )
+            .edgesIgnoringSafeArea(.all)
+)
             
         }.toolbar(.hidden)
     }

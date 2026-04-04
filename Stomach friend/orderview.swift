@@ -8,15 +8,23 @@ import SwiftUI
 
 struct YourOrderView: View {
     var body: some View {
-        VStack {
-            Text("Your Orders")
-                .font(.title)
-            Text("Track and manage your current orders.")
-                .foregroundColor(.secondary)
+        ZStack{
+            LinearGradient(
+                gradient: Gradient(colors: [.blue.opacity(0.3), .pink.opacity(0.6)]),
+                startPoint: .top, endPoint: .bottom
+            )
+            .edgesIgnoringSafeArea(.all)
+
+            VStack {
+                Text("Your Orders")
+                    .font(.title)
+                Text("Track and manage your current orders.")
+                    .foregroundColor(.secondary)
+            }
+            .padding()
+            .navigationTitle("Orders")
+            
         }
-        .padding()
-        .navigationTitle("Orders")
-        
     }
 }
 
