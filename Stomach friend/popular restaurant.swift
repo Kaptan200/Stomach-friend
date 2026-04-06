@@ -1,18 +1,29 @@
 import SwiftUI
-import UserNotifications
 import Combine
+import UserNotifications
 
 // MARK: - SAMPLE DATA
-struct RestaurantData {
-    static let images = ["food1", "food2", "food3", "food4"]
-    static let names = ["Dominos", "KFC", "Pizza Hut", "Burger King"]
+//let restaurantimg = ["food1", "food2", "food3", "food4"]
+//let restaurantlist = ["Dominos", "KFC", "Pizza Hut", "Burger King"]
+
+// MARK: - SEAT MODEL
+struct Seat: Identifiable, Codable {
+    let id: Int
+    var isBooked: Bool
 }
 
-// MARK: - MODEL
+// MARK: - RESERVATION MODEL
 struct Reservation: Identifiable, Codable {
     var id = UUID()
+    
     let restaurantName: String
-    let date: Date
+    let customerName: String
+    let phoneNumber: String
+    
+    let startTime: Date
+    let endTime: Date
+    
+    let selectedSeats: [Int]
 }
 
 // MARK: - RESERVATION MANAGER
@@ -22,10 +33,22 @@ class ReservationManager: ObservableObject {
     
     init() {
         load()
+        removeExpiredReservations()
+        
+        // Auto cleanup every minute
+        Timer.scheduledTimer(withTimeInterval: 60, repeats: true) { _ in
+            self.removeExpiredReservations()
+        }
     }
     
     func addReservation(_ reservation: Reservation) {
         reservations.append(reservation)
+        save()
+    }
+    
+    func removeExpiredReservations() {
+        let now = Date()
+        reservations.removeAll { $0.endTime < now }
         save()
     }
     
@@ -43,15 +66,36 @@ class ReservationManager: ObservableObject {
     }
 }
 
-// MARK: - NOTIFICATION MANAGER
+// MARK: - SEAT MANAGER (LIVE)
+class SeatManager: ObservableObject {
+    
+    @Published var seats: [Seat] = []
+    
+    init() {
+        generateSeats()
+    }
+    
+    func generateSeats() {
+        seats = (1...20).map { Seat(id: $0, isBooked: false) }
+    }
+    
+    func bookSeats(_ selected: [Int]) {
+        for index in seats.indices {
+            if selected.contains(seats[index].id) {
+                seats[index].isBooked = true
+            }
+        }
+    }
+}
+
+// MARK: - NOTIFICATION
 class NotificationManager {
     
     static let shared = NotificationManager()
     
     func requestPermission() {
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { granted, _ in
-            print("Permission:", granted)
-        }
+        UNUserNotificationCenter.current()
+            .requestAuthorization(options: [.alert, .sound]) { _, _ in }
     }
     
     func scheduleNotification(for reservation: Reservation) {
@@ -59,14 +103,16 @@ class NotificationManager {
         let content = UNMutableNotificationContent()
         content.title = "Table Reservation 🍽️"
         content.body = "Reminder for \(reservation.restaurantName)"
-        content.sound = .default
         
         let triggerDate = Calendar.current.dateComponents(
             [.year, .month, .day, .hour, .minute],
-            from: reservation.date
+            from: reservation.startTime
         )
         
-        let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDate, repeats: false)
+        let trigger = UNCalendarNotificationTrigger(
+            dateMatching: triggerDate,
+            repeats: false
+        )
         
         let request = UNNotificationRequest(
             identifier: UUID().uuidString,
@@ -78,54 +124,129 @@ class NotificationManager {
     }
 }
 
+// MARK: - SEAT UI
+struct SeatSelectionView: View {
+    
+    @ObservedObject var seatManager: SeatManager
+    @Binding var selectedSeats: Set<Int>
+    
+    let columns = Array(repeating: GridItem(.flexible()), count: 4)
+    
+    var body: some View {
+        VStack(alignment: .leading) {
+            
+            Text("Select Seats 🪑")
+                .font(.headline)
+            
+            LazyVGrid(columns: columns, spacing: 15) {
+                
+                ForEach(seatManager.seats) { seat in
+                    
+                    let isSelected = selectedSeats.contains(seat.id)
+                    
+                    Text("\(seat.id)")
+                        .frame(width: 50, height: 50)
+                        .background(
+                            seat.isBooked ? Color.red :
+                            isSelected ? Color.blue :
+                            Color.green
+                        )
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                        .onTapGesture {
+                            if !seat.isBooked {
+                                if isSelected {
+                                    selectedSeats.remove(seat.id)
+                                } else {
+                                    selectedSeats.insert(seat.id)
+                                }
+                            }
+                        }
+                }
+            }
+        }
+    }
+}
+
 // MARK: - RESERVATION SCREEN
 struct ReservationView: View {
     
     let restaurantName: String
     
     @Environment(\.dismiss) private var dismiss
-    @StateObject var manager = ReservationManager()
     
-    @State private var selectedDate = Date()
+    @StateObject var manager = ReservationManager()
+    @StateObject var seatManager = SeatManager()
+    
+    @State private var name = ""
+    @State private var phone = ""
+    
+    @State private var startTime = Date()
+    @State private var endTime = Date().addingTimeInterval(3600)
+    
+    @State private var selectedSeats: Set<Int> = []
     
     var body: some View {
-        VStack(spacing: 20) {
-            
-            Text("Reserve Table at \(restaurantName)")
-                .font(.title2)
-                .bold()
-            
-            DatePicker("Select Date & Time", selection: $selectedDate)
-                .padding()
-            
-            Button("Confirm Reservation") {
+        ScrollView {
+            VStack(spacing: 20) {
                 
-                let reservation = Reservation(
-                    restaurantName: restaurantName,
-                    date: selectedDate
+                Text("Reserve at \(restaurantName)")
+                    .font(.title2.bold())
+                
+                TextField("Name", text: $name)
+                    .padding()
+                    .background(Color.gray.opacity(0.1))
+                    .cornerRadius(10)
+                
+                TextField("Phone", text: $phone)
+                    .keyboardType(.numberPad)
+                    .padding()
+                    .background(Color.gray.opacity(0.1))
+                    .cornerRadius(10)
+                
+                DatePicker("Start Time", selection: $startTime)
+                DatePicker("End Time", selection: $endTime)
+                
+                SeatSelectionView(
+                    seatManager: seatManager,
+                    selectedSeats: $selectedSeats
                 )
                 
-                manager.addReservation(reservation)
-                NotificationManager.shared.scheduleNotification(for: reservation)
-                
-                dismiss()
+                Button("Confirm Reservation") {
+                    
+                    guard !selectedSeats.isEmpty else { return }
+                    
+                    let reservation = Reservation(
+                        restaurantName: restaurantName,
+                        customerName: name,
+                        phoneNumber: phone,
+                        startTime: startTime,
+                        endTime: endTime,
+                        selectedSeats: Array(selectedSeats)
+                    )
+                    
+                    manager.addReservation(reservation)
+                    seatManager.bookSeats(Array(selectedSeats))
+                    
+                    NotificationManager.shared.scheduleNotification(for: reservation)
+                    
+                    dismiss()
+                }
+                .padding()
+                .frame(maxWidth: .infinity)
+                .background(Color.green)
+                .foregroundColor(.white)
+                .cornerRadius(12)
             }
             .padding()
-            .frame(maxWidth: .infinity)
-            .background(Color.green)
-            .foregroundColor(.white)
-            .cornerRadius(12)
-            
-            Spacer()
         }
-        .padding()
         .onAppear {
             NotificationManager.shared.requestPermission()
         }
     }
 }
 
-// MARK: - RESERVATION LIST
+// MARK: - LIST VIEW
 struct ReservationListView: View {
     
     @StateObject var manager = ReservationManager()
@@ -133,23 +254,31 @@ struct ReservationListView: View {
     var body: some View {
         List(manager.reservations) { res in
             VStack(alignment: .leading) {
+                
                 Text(res.restaurantName)
                     .font(.headline)
                 
-                Text(res.date.formatted(date: .abbreviated, time: .shortened))
-                    .font(.subheadline)
+                Text("👤 \(res.customerName)")
+                Text("📞 \(res.phoneNumber)")
+                
+                Text("Start: \(res.startTime.formatted(date: .abbreviated, time: .shortened))")
+                Text("End: \(res.endTime.formatted(date: .abbreviated, time: .shortened))")
+                
+                Text("Seats: \(res.selectedSeats.map { String($0) }.joined(separator: ", "))")
+                    .font(.caption)
             }
         }
         .navigationTitle("My Reservations")
+        .onAppear {
+            manager.removeExpiredReservations()
+        }
     }
 }
 
-// MARK: - POPULAR RESTAURANTS
+// MARK: - MAIN SCREEN
 struct PopularRestaurant: View {
     
-    @Environment(\.dismiss) private var dismiss
-    
-    var columns = [
+    let columns = [
         GridItem(.flexible()),
         GridItem(.flexible())
     ]
@@ -158,8 +287,6 @@ struct PopularRestaurant: View {
         NavigationStack {
             
             ZStack {
-                
-                // 🌈 BACKGROUND
                 LinearGradient(
                     colors: [.blue.opacity(0.3), .pink.opacity(0.6)],
                     startPoint: .top,
@@ -169,68 +296,42 @@ struct PopularRestaurant: View {
                 
                 VStack {
                     
-                    // HEADER
                     HStack {
-                        Button(action: { dismiss() }) {
-                            Image(systemName: "chevron.left")
-                                .bold()
-                        }
                         Spacer()
-                        
-                        Text("Popular Restaurants")
+                        Text("Restaurants")
                             .font(.title2.bold())
-                        
                         Spacer()
                         
-                        NavigationLink("My Bookings") {
+                        NavigationLink("Bookings") {
                             ReservationListView()
                         }
                     }
                     .padding()
                     
-                    // GRID
                     ScrollView {
                         LazyVGrid(columns: columns, spacing: 20) {
                             
-                            ForEach(restaurantimg.indices, id: \.self) { index in
+                            ForEach(restaurantimg.indices, id: \.self) { i in
                                 
                                 NavigationLink {
                                     ReservationView(
-                                        restaurantName: restaurantlist[index]
+                                        restaurantName: restaurantlist[i]
                                     )
                                 } label: {
                                     
-                                    VStack(spacing: 0) {
-                                        
-                                        Image(restaurantimg[index])
+                                    VStack {
+                                        Image(restaurantimg[i])
                                             .resizable()
                                             .aspectRatio(1, contentMode: .fill)
                                             .frame(height: 120)
                                             .clipped()
                                         
-                                        VStack(alignment: .leading) {
-                                            Text(restaurantlist[index])
-                                                .font(.headline)
-                                            
-                                            HStack(spacing: 2) {
-                                                ForEach(0..<4) { _ in
-                                                    Image(systemName: "star.fill")
-                                                        .foregroundColor(.yellow)
-                                                        .font(.footnote)
-                                                }
-                                                Image(systemName: "star.fill")
-                                                    .foregroundColor(.gray)
-                                                    .font(.footnote)
-                                            }
-                                            
-                                            Text("4.5 Reviews")
-                                                .font(.caption)
-                                        }
-                                        .padding()
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                        .background(Color.white)
+                                        Text(restaurantlist[i])
+                                            .font(.headline)
+                                            .padding()
                                     }
-                                    .cornerRadius(15)
+                                    .background(Color.white)
+                                    .cornerRadius(12)
                                 }
                                 .buttonStyle(.plain)
                             }
@@ -239,11 +340,11 @@ struct PopularRestaurant: View {
                     }
                 }
             }
-        }.toolbar(.hidden)
+        }
     }
 }
 
-
-#Preview{
+// MARK: - PREVIEW
+#Preview {
     PopularRestaurant()
 }
