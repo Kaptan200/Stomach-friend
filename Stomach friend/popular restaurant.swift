@@ -325,10 +325,20 @@ struct PopularRestaurant: View {
                                             .aspectRatio(1, contentMode: .fill)
                                             .frame(height: 120)
                                             .clipped()
-                                        
-                                        Text(restaurantlist[i])
-                                            .font(.headline)
-                                            .padding()
+                                        VStack {
+                                            Text(restaurantlist[i])
+                                                .foregroundStyle(Color.black)
+                                                .font(.system(size: 17, weight: .bold))
+                                                .padding(EdgeInsets(top: 0, leading: -5, bottom: 0, trailing: 0))
+                                            HStack {
+                                                ForEach(0..<4) { _ in
+                                                    Image(systemName: "star.fill").foregroundColor(.yellow)
+                                                }
+                                            }
+//                                            .padding(EdgeInsets(top: 0, leading: 30, bottom: 0, trailing: 0))
+                                            Text("4.5M Reviews")
+//                                                .padding(EdgeInsets(top: 0, leading: 30, bottom: 0, trailing: 0))
+                                        }.padding(EdgeInsets(top: 0, leading: -55, bottom: 0, trailing: 0))
                                     }
                                     .background(Color.white)
                                     .cornerRadius(12)
