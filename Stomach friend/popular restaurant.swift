@@ -277,7 +277,7 @@ struct ReservationListView: View {
 
 // MARK: - MAIN SCREEN
 struct PopularRestaurant: View {
-    
+    @State private var rating: Int = 0
     let columns = [
         GridItem(.flexible()),
         GridItem(.flexible())
@@ -330,12 +330,17 @@ struct PopularRestaurant: View {
                                                 .foregroundStyle(Color.black)
                                                 .font(.system(size: 17, weight: .bold))
                                                 .padding(EdgeInsets(top: 0, leading: -5, bottom: 0, trailing: 0))
-                                            HStack {
-                                                ForEach(0..<4) { _ in
-                                                    Image(systemName: "star.fill").foregroundColor(.yellow)
+                                            HStack{
+                                                ForEach(1...5, id: \.self) { star in
+                                                    Image(systemName: star <= rating ? "star.fill" : "star")
+                                                        .foregroundColor(.yellow)
+                                                        .onTapGesture {
+                                                            rating = star
+                                                        }
+                                                    
                                                 }
                                             }
-//                                            .padding(EdgeInsets(top: 0, leading: 30, bottom: 0, trailing: 0))
+                                            .padding(EdgeInsets(top: 0, leading: 30, bottom: 0, trailing: 0))
                                             Text("4.5M Reviews")
 //                                                .padding(EdgeInsets(top: 0, leading: 30, bottom: 0, trailing: 0))
                                         }.padding(EdgeInsets(top: 0, leading: -55, bottom: 0, trailing: 0))
