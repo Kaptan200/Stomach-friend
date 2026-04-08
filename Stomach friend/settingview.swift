@@ -32,7 +32,7 @@ struct SettingsView: View {
                             Text("Edit profile")
                         }
                         NavigationLink{
-                            YourOrderView()
+                            OrdersView()
                         }label: {
                             Text("Your orders")
                         }

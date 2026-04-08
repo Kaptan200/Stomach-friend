@@ -13,7 +13,7 @@ import Firebase
 struct Stomach_friendApp: App {
 
     @StateObject private var favoritesStore = FavoritesStore()
-
+@StateObject private var cartStore: CartStore = CartStore()
     init() {
         FirebaseApp.configure()
     }
@@ -22,7 +22,7 @@ struct Stomach_friendApp: App {
         WindowGroup {
             ContentView5()
                 .environmentObject(favoritesStore)
-        
+                .environmentObject(cartStore)
         }
     }
 }

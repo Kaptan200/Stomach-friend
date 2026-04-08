@@ -6,31 +6,53 @@
 //
 import SwiftUI
 
-struct YourOrderView: View {
-    var body: some View {
-        ZStack{
-            LinearGradient(
-                gradient: Gradient(colors: [.blue.opacity(0.3), .pink.opacity(0.6)]),
-                startPoint: .top, endPoint: .bottom
-            )
-            .edgesIgnoringSafeArea(.all)
+struct OrdersView: View {
+    @EnvironmentObject var orderStore: OrderStore
 
-            VStack {
-                Text("Your Orders")
-                    .font(.title)
-                Text("Track and manage your current orders.")
-                    .foregroundColor(.secondary)
+    var body: some View {
+        Group {
+            if orderStore.orders.isEmpty {
+                VStack(spacing: 12) {
+                    Image(systemName: "bag")
+                        .font(.system(size: 50))
+                        .foregroundStyle(.gray)
+
+                    Text("No orders yet")
+                        .font(.title3.bold())
+
+                    Text("Your confirmed orders will appear here")
+                        .foregroundStyle(.gray)
+                }
+            } else {
+                List {
+                    ForEach(orderStore.orders) { order in
+                        VStack(alignment: .leading, spacing: 10) {
+                            Text("Total: ₹\(Int(order.totalAmount))")
+                                .font(.headline)
+
+                            Text(order.orderDate.formatted(date: .abbreviated, time: .shortened))
+                                .font(.caption)
+                                .foregroundStyle(.gray)
+
+                            ForEach(order.items) { item in
+                                HStack {
+                                    Text(item.food.category)
+                                    Spacer()
+                                    Text("x\(item.quantity)")
+                                }
+                            }
+                        }
+                        .padding(.vertical, 8)
+                    }
+                }
             }
-            .padding()
-            .navigationTitle("Orders")
-            
         }
+        .navigationTitle("My Orders")
     }
 }
-
 #Preview {
    
-        YourOrderView()
-    
+    OrdersView()
+        .environmentObject(OrderStore())
 }
 

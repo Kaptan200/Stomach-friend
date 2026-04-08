@@ -9,6 +9,7 @@ import SwiftUI
 
 struct maintab: View {
    @EnvironmentObject var favoritesStore: FavoritesStore
+    @EnvironmentObject var cartStore: CartStore
 
     var body: some View {
         TabView {
@@ -48,4 +49,6 @@ struct maintab: View {
 #Preview {
     maintab()
         .environmentObject(FavoritesStore())
+        .environmentObject(CartStore())
+        .environmentObject(OrderStore())
 }
