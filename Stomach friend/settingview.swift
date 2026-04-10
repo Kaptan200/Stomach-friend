@@ -5,7 +5,6 @@
 //  Created by applelab03 on 2/23/26.
 //
 import SwiftUI
-
 struct SettingsView: View {
     @Environment(\.dismiss) private var dismiss
     var body: some View {
@@ -62,23 +61,9 @@ struct SettingsView: View {
                         }
                        
                     }
-                } .scrollContentBackground(.hidden) // 🔥 remove white background
+                } .scrollContentBackground(.hidden) 
                     .background(Color.clear)
-//                Button(action: {
-//                    print("Delete Account")
-//                }) {
-//                    Text("Delete Account")
-//                        .fontWeight(.semibold)
-//                        .frame(maxWidth: .infinity)
-//                        .padding()
-//                        .background(Color.red)
-//                        .foregroundColor(.white)
-//                        .cornerRadius(12)
-//                }
-//                .padding(.horizontal)
-//                .padding(.top)
-                
-            }.background(LinearGradient(
+                }.background(LinearGradient(
                 gradient: Gradient(colors: [.blue.opacity(0.3), .pink.opacity(0.6)]),
                 startPoint: .top, endPoint: .bottom
             )
@@ -91,5 +76,6 @@ struct SettingsView: View {
 
 #Preview {
     SettingsView()
+        .environmentObject(OrderStore())
 }
 

@@ -7,8 +7,6 @@
 
 
 import SwiftUI
-
-
 struct phpnames: Identifiable {
     var id = UUID()
     var name: String

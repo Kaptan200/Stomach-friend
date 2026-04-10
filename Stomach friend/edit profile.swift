@@ -5,7 +5,6 @@
 //  Created by applelab03 on 2/23/26.
 //
 import SwiftUI
-
 struct EditProfileView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var fullName: String = ""

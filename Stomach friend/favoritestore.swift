@@ -8,9 +8,7 @@ import SwiftUI
 import Combine
 
 class FavoritesStore: ObservableObject {
-    
-    @Published var likedNames: Set<String> = []
-
+   @Published var likedNames: Set<String> = []
     init() {}
 
     func isLiked(_ name: String) -> Bool {

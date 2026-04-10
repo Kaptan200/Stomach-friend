@@ -1,11 +1,6 @@
 import SwiftUI
 import Combine
 import UserNotifications
-
-// MARK: - SAMPLE DATA
-//let restaurantimg = ["food1", "food2", "food3", "food4"]
-//let restaurantlist = ["Dominos", "KFC", "Pizza Hut", "Burger King"]
-
 // MARK: - SEAT MODEL
 struct Seat: Identifiable, Codable {
     let id: Int
@@ -278,6 +273,7 @@ struct ReservationListView: View {
 // MARK: - MAIN SCREEN
 struct PopularRestaurant: View {
     @State private var rating: Int = 0
+    @Environment(\.dismiss) private var dismiss
     let columns = [
         GridItem(.flexible()),
         GridItem(.flexible())
@@ -297,6 +293,11 @@ struct PopularRestaurant: View {
                 VStack {
                     
                     HStack {
+                        Button(action: { dismiss() }) {
+                            Image(systemName: "chevron.left")
+                                .bold()
+                         }
+                         .foregroundStyle(Color.primary)
                         Spacer()
                         Text("Restaurants")
                             .font(.title2.bold())
@@ -355,7 +356,7 @@ struct PopularRestaurant: View {
                     }
                 }
             }
-        }
+        }.toolbar(.hidden)
     }
 }
 

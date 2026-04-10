@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BF5DEDB42F55580C0045A5E5 /* paymentsuccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5DEDB32F5557FD0045A5E5 /* paymentsuccess.swift */; };
 		BF62656C2F4C5C20001AE3EC /* FirebaseAI in Frameworks */ = {isa = PBXBuildFile; productRef = BF62656B2F4C5C20001AE3EC /* FirebaseAI */; };
 		BF62656E2F4C5C20001AE3EC /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = BF62656D2F4C5C20001AE3EC /* FirebaseAuth */; };
 		BF6265702F4C5C20001AE3EC /* FirebaseAuthCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = BF62656F2F4C5C20001AE3EC /* FirebaseAuthCombine-Community */; };
@@ -20,7 +19,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		BF5DEDB32F5557FD0045A5E5 /* paymentsuccess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = paymentsuccess.swift; sourceTree = "<group>"; };
 		BF8BCB1D2F70F6A700E82D2D /* Stomach friend.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Stomach friend.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF8BCB1F2F70F6A700E82D2D /* aboutview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = aboutview.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -56,7 +54,6 @@
 			isa = PBXGroup;
 			children = (
 				BFD82BC22F3B26A2004EAE03 /* Stomach friend */,
-				BF5DEDB32F5557FD0045A5E5 /* paymentsuccess.swift */,
 				BF8BCB1D2F70F6A700E82D2D /* Stomach friend.app */,
 				BF8BCB1F2F70F6A700E82D2D /* aboutview.swift */,
 			);
@@ -147,7 +144,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BF5DEDB42F55580C0045A5E5 /* paymentsuccess.swift in Sources */,
 				BF8BCB3A2F70F6A700E82D2D /* aboutview.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -5,7 +5,6 @@
 //  Created by applelab03 on 2/23/26.
 //
 import SwiftUI
-
 struct Restaurant: Identifiable {
     let id = UUID()
     let name: String
@@ -15,7 +14,6 @@ struct Restaurant: Identifiable {
     let lastVisited: String
     let imageName: String
 }
-
 struct VisitedRestaurantsView: View {
     @Environment(\.dismiss) private var dismiss
     let restaurants = [

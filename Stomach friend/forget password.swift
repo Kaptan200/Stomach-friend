@@ -18,8 +18,6 @@ struct ForgotPasswordView: View {
                     startPoint: .top, endPoint: .bottom
                 )
                 .edgesIgnoringSafeArea(.all)
-
-                
                 VStack(spacing: 30) {
                     
                     Spacer()

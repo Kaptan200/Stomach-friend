@@ -5,7 +5,6 @@
 //  Created by applelab03 on 2/23/26.
 //
 import SwiftUI
-
 struct AboutView: View {
     @Environment(\.dismiss) private var dismiss
     var body: some View {
