@@ -111,4 +111,7 @@ struct HomePageView: View {
 
 #Preview {
     ContentView5()
+        .environmentObject(CartStore())
+        .environmentObject(OrderStore())
+        .environmentObject(FavoritesStore())
 }

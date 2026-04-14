@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-
 struct maintab: View {
    @EnvironmentObject var favoritesStore: FavoritesStore
     @EnvironmentObject var cartStore: CartStore
