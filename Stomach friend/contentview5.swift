@@ -9,21 +9,21 @@
 import SwiftUI
 import Firebase
 struct ContentView5: View {
-@StateObject var auth = AuthViewModel()
-   var body: some View {
-        Group {
-            if auth.isAuthenticated {
-                HomePageView(auth: auth)
-            } else {
-                AuthView(auth: auth)
-            }
-        }
-    }
-}
-
-struct HomePageView: View {
+//@StateObject var auth = AuthViewModel()
+//   var body: some View {
+//        Group {
+//            if auth.isAuthenticated {
+//                HomePageView(auth: auth)
+//            } else {
+//                AuthView(auth: auth)
+//            }
+//        }
+//    }
+//}
+//
+//struct HomePageView: View {
     
-    @ObservedObject var auth: AuthViewModel
+//    @ObservedObject var auth: AuthViewModel
 
     var body: some View {
         NavigationStack {
@@ -114,4 +114,5 @@ struct HomePageView: View {
         .environmentObject(CartStore())
         .environmentObject(OrderStore())
         .environmentObject(FavoritesStore())
+        .environmentObject(OrderStore())
 }

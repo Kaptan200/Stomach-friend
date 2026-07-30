@@ -19,7 +19,7 @@ struct OrderHistoryView: View {
             Text(item)
         }
         .navigationTitle("History")
-        .navigationBarTitleDisplayMode(.inline)
+//        .navigationBarTitleDisplayMode(.inline)
     }
 }
 #Preview {

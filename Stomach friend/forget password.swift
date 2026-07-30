@@ -45,46 +45,46 @@ struct ForgotPasswordView: View {
                             .background(Color.white)
                             .cornerRadius(12)
                             .shadow(color: .black.opacity(0.05), radius: 5, x: 0, y: 3)
-                            .keyboardType(.emailAddress)
-                            .autocapitalization(.none)
-                    }
-                    .padding(.horizontal, 24)
-                    
-                    // Reset Button
-                    Button(action: {
-                        // Handle reset password action
-                    }) {
-                        Text("Send Reset Link")
-                            .foregroundColor(.white)
-                            .font(.system(size: 16, weight: .semibold))
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(Color.blue)
-                            .cornerRadius(12)
-                    }
-                    .padding(.horizontal, 24)
-                    .padding(.top, 10)
-                    
-                    Spacer()
-                    
-                    // Back to Login
-                    HStack {
-                        Text("Remember your password?")
-                            .foregroundColor(.gray)
+                        //                            .keyboardType(.emailAddress)
+                        //                            .autocapitalization(.none)
+                        //                    }
+                        //                    .padding(.horizontal, 24)
                         
-                        Button(action: { dismiss() }) {
-                            Text("Login")
-                         }
-                         .foregroundStyle(Color.primary)
+                        // Reset Button
+                        Button(action: {
+                            // Handle reset password action
+                        }) {
+                            Text("Send Reset Link")
+                                .foregroundColor(.white)
+                                .font(.system(size: 16, weight: .semibold))
+                                .frame(maxWidth: .infinity)
+                                .padding()
+                                .background(Color.blue)
+                                .cornerRadius(12)
+                        }
+                        .padding(.horizontal, 24)
+                        .padding(.top, 10)
+                        
+                        Spacer()
+                        
+                        // Back to Login
+                        HStack {
+                            Text("Remember your password?")
+                                .foregroundColor(.gray)
+                            
+                            Button(action: { dismiss() }) {
+                                Text("Login")
+                            }
+                            .foregroundStyle(Color.primary)
+                        }
+                        .font(.system(size: 14))
+                        .padding(.bottom, 30)
                     }
-                    .font(.system(size: 14))
-                    .padding(.bottom, 30)
                 }
-            }
-        }.toolbar(.hidden)
+            }.toolbar(.hidden)
+        }
     }
 }
-
 struct ForgotPasswordView_Previews: PreviewProvider {
     static var previews: some View {
         ForgotPasswordView()
