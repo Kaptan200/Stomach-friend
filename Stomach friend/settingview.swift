@@ -62,7 +62,7 @@ struct SettingsView: View {
                        
                     }
                 } .scrollContentBackground(.hidden) 
-                    .background(Color.clear)
+                .background(Color.clear)
                 }.background(LinearGradient(
                 gradient: Gradient(colors: [.blue.opacity(0.3), .pink.opacity(0.6)]),
                 startPoint: .top, endPoint: .bottom

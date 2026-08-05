@@ -197,8 +197,9 @@ struct logut: View {
     var body: some View {
         HStack {
             Spacer()
-            Button(action: { auth.logout() }) {
-                NavigationLink { ContentView5() } label: {
+            Button(action: { /*auth.logout()*/ }) {
+                NavigationLink { ContentView5()
+                } label: {
                     Text("Logout \(Image(systemName: "rectangle.portrait.and.arrow.right"))")
                         .foregroundColor(.white)
                         .padding()

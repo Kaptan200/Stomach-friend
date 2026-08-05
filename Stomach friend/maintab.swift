@@ -41,7 +41,9 @@ struct maintab: View {
                     Text("Profile")
                 }
             
-        }
+        }.toolbarBackground(.black, for: .tabBar)
+            .toolbarBackground(.visible, for: .tabBar)
+
     }
 }
 
